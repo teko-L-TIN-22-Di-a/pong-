@@ -1,43 +1,27 @@
-package ch.teko.loefflee;
-import java.awt.*;
+package src.main.java.ch.teko.loefflee;
 
-public class CpuPaddle {
-    private int x, y;
-    private int width, height;
-
+public class CpuPaddle extends Paddle {
     public CpuPaddle(int x, int y) {
-        this.x = x;
-        this.y = y;
-        width = 10;
-        height = 60;
+        super(x, y);
     }
 
-    public void move(int ballY) {
-        // Erhöhe die Geschwindigkeit, indem du die Bewegung um mehr als eine Einheit vergrößerst
-        int speed = 3; // Beispiel: Eine schnellere Geschwindigkeit
+    public void move(int ballY, int windowHeight, int windowWidth) {
+        int speed = 3;
 
         if (ballY < y + height / 2) {
             y -= speed;
         } else if (ballY > y + height / 2) {
             y += speed;
         }
-    }
 
+        // Sicherstellen, dass das Paddle nicht über den oberen oder unteren Rand hinausgeht
+        if (y < 0) {
+            y = 0;
+        } else if (y > windowHeight - height) {
+            y = windowHeight - height;
+        }
 
-    public void draw(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(x, y, width, height);
-    }
-
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+        // Anpassen der horizontalen Position des Paddles basierend auf der Fensterbreite
+        x = windowWidth - width; // Das Paddle bleibt am rechten Rand des Fensters
     }
 }

@@ -1,4 +1,4 @@
-package ch.teko.loefflee;
+package src.main.java.ch.teko.loefflee;
 
 import java.awt.*;
 
@@ -35,5 +35,18 @@ public class Paddle {
 
     public int getY() {
         return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    // Diese Methode ermöglicht es, die Höhe des Paddels zu setzen
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

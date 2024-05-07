@@ -1,4 +1,4 @@
-package ch.teko.loefflee;
+package src.main.java.ch.teko.loefflee;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 public class Pong extends JPanel implements ActionListener, KeyListener {
     private Ball ball;
@@ -15,17 +14,17 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     private int playerScore;
     private int cpuScore;
     private Timer timer;
+    private SpecialEffects specialEffects;
 
     // Variable for paddle speed
     private int paddleSpeed = 2;
 
     public Pong() {
         setFocusable(true);
-        setPreferredSize(new Dimension(800, 600));
         addKeyListener(this);
 
-        // Ball starts at fixed position
-        ball = new Ball(395, 295); // Adjust the position as needed
+        // Create the ball
+        ball = new Ball(getWidth(), getHeight());
 
         // Initialize player and CPU paddles
         playerPaddle = new PlayerPaddle(10, 250);
@@ -39,23 +38,26 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
         timer = new Timer(5, this);
         timer.start();
 
-        // Randomly set initial direction of the ball
-        Random random = new Random();
-        int dx = random.nextBoolean() ? 1 : -1; // Either 1 (right) or -1 (left)
-        int dy = random.nextBoolean() ? 1 : -1; // Either 1 (down) or -1 (up)
-        ball.setDx(dx);
-        ball.setDy(dy);
+        // Initialize SpecialEffects
+        specialEffects = new SpecialEffects(ball);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
+
+        // Determine the width and height of the playing field based on the current window size
+        int borderWidth = 0; // Border width
+        int fieldWidth = getWidth() - 2 * borderWidth;
+        int fieldHeight = getHeight() - 2 * borderWidth;
+
+        // Draw the playing field with adjusted boundaries
+        g.fillRect(borderWidth, borderWidth, fieldWidth, fieldHeight);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.drawString("Player: " + playerScore, 10, 20);
-        g.drawString("CPU: " + cpuScore, 680, 580);
+        g.drawString("CPU: " + cpuScore, getWidth() - 100, getHeight() - 20); // Score display at the bottom
 
         ball.draw(g);
         playerPaddle.draw(g);
@@ -67,31 +69,40 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
 
         int ballX = ball.getX();
         int ballY = ball.getY();
+        int ballSize = ball.getSize(); // Get ball size
 
-        if (ballX <= playerPaddle.getX() + 10 && ballY >= playerPaddle.getY() && ballY <= playerPaddle.getY() + 60) {
-            ball.changeDirectionX();
-        }
+        int borderWidth = 0; // Set border width to 0 since the playing field should occupy the entire window area
 
-        if (ballX >= cpuPaddle.getX() - 10 && ballY >= cpuPaddle.getY() && ballY <= cpuPaddle.getY() + 60) {
-            ball.changeDirectionX();
-        }
-
-        if (ballY <= 0 || ballY >= 590) {
+        // Check and bounce if the ball reaches the top or bottom boundaries
+        if (ballY <= borderWidth || ballY >= getHeight() - borderWidth - ballSize) {
             ball.changeDirectionY();
         }
 
+        // Check and bounce if the ball collides with the player or CPU paddle
+        if (ballX <= playerPaddle.getX() + playerPaddle.getWidth() && ballY >= playerPaddle.getY() && ballY <= playerPaddle.getY() + playerPaddle.getHeight()) {
+            ball.changeDirectionX();
+        }
+
+        if (ballX >= cpuPaddle.getX() - ballSize && ballY >= cpuPaddle.getY() && ballY <= cpuPaddle.getY() + cpuPaddle.getHeight()) {
+            ball.changeDirectionX();
+        }
+
+        // Check and increase score as well as reset the ball if it leaves the playing field
         if (ballX < 0) {
             cpuScore++;
-            ball = new Ball(395, 295);
+            ball.reset(getWidth(), getHeight());
         }
 
-        if (ballX > 790) {
+        if (ballX > getWidth() - ballSize) {
             playerScore++;
-            ball = new Ball(395, 295);
+            ball.reset(getWidth(), getHeight());
         }
 
-        cpuPaddle.move(ballY);
+        // Movement of the CPU paddle
+        cpuPaddle.move(ballY, getHeight(), getWidth());
 
+
+        // Redraw the playing field
         repaint();
     }
 
@@ -99,16 +110,10 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
         int keyCode = e.getKeyCode();
 
         if (keyCode == KeyEvent.VK_W && playerPaddle.getY() > 0) {
-            // Increase the Y position of the player paddle
-            playerPaddle.moveUp();
-            // Increase the Y position of the player paddle again to increase speed
             playerPaddle.moveUp();
         }
 
-        if (keyCode == KeyEvent.VK_S && playerPaddle.getY() < 540) {
-            // Decrease the Y position of the player paddle
-            playerPaddle.moveDown();
-            // Decrease the Y position of the player paddle again to increase speed
+        if (keyCode == KeyEvent.VK_S && playerPaddle.getY() < getHeight() - playerPaddle.getHeight()) {
             playerPaddle.moveDown();
         }
     }

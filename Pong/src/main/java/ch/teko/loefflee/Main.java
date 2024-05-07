@@ -1,14 +1,14 @@
-package ch.teko.loefflee;
+package src.main.java.ch.teko.loefflee;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Pong");
+        JFrame frame = new JFrame("Pong+");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(850, 600);
+        frame.setSize(815, 630);
         frame.setResizable(true);
-        frame.add(new Pong());
+        frame.add(new src.main.java.ch.teko.loefflee.Pong());
         frame.setVisible(true);
     }
 }

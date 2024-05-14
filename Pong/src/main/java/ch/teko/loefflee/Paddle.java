@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Paddle {
     protected int x, y;
-    protected int width = 10, height = 60;
+    protected int width = 5, height = 60;
     protected int speed = 5;
 
     public Paddle(int x, int y) {
@@ -45,7 +45,6 @@ public class Paddle {
         return height;
     }
 
-    // Diese Methode ermöglicht es, die Höhe des Paddels zu setzen
     public void setHeight(int height) {
         this.height = height;
     }

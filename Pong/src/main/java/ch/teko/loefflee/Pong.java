@@ -13,8 +13,9 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     private CpuPaddle cpuPaddle;
     private int playerScore;
     private int cpuScore;
+
     private Timer timer;
-    private SpecialEffects specialEffects;
+    private SpecialEffects specialEffects; // Hinzufügen der specialEffects-Instanz
 
     // Variable for paddle speed
     private int paddleSpeed = 2;
@@ -28,18 +29,17 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
 
         // Initialize player and CPU paddles
         playerPaddle = new PlayerPaddle(10, 250);
-        cpuPaddle = new CpuPaddle(780, 250);
+        cpuPaddle = new CpuPaddle(500, 250);
 
         // Initialize scores
         playerScore = 0;
         cpuScore = 0;
 
-        // Timer for game loop
-        timer = new Timer(5, this);
-        timer.start();
+        specialEffects = new SpecialEffects(); // Initialisieren der specialEffects-Instanz
 
-        // Initialize SpecialEffects
-        specialEffects = new SpecialEffects(ball);
+        // Start the game timer
+        timer = new Timer(10, this); // 10 milliseconds between each frame
+        timer.start();
     }
 
     public void paintComponent(Graphics g) {
@@ -65,16 +65,15 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        // Update ball position
         ball.move();
 
         int ballX = ball.getX();
         int ballY = ball.getY();
         int ballSize = ball.getSize(); // Get ball size
 
-        int borderWidth = 0; // Set border width to 0 since the playing field should occupy the entire window area
-
         // Check and bounce if the ball reaches the top or bottom boundaries
-        if (ballY <= borderWidth || ballY >= getHeight() - borderWidth - ballSize) {
+        if (ballY <= 0 || ballY >= getHeight() - ballSize) {
             ball.changeDirectionY();
         }
 
@@ -101,10 +100,13 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
         // Movement of the CPU paddle
         cpuPaddle.move(ballY, getHeight(), getWidth());
 
+        // Check for special effects activation
+        specialEffects.activateRandomEffect();
 
         // Redraw the playing field
         repaint();
     }
+
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();

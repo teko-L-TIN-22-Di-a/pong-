@@ -5,42 +5,39 @@ import java.util.Random;
 
 public class Ball {
     private int x, y;
-    private int dx, dy;
+    public int dx, dy;
     private int speed;
-    private int size; // Variable for the size of the ball
+    private int size;
+    private int defaultSpeed = 3; // Standardgeschwindigkeit des Balls
 
     public Ball(int windowWidth, int windowHeight) {
-        // Set the starting position of the ball to the center of the window
-        this.x = windowWidth / 2 - 5; // Half of the window width minus half of the ball size
-        this.y = windowHeight / 2 - 5; // Half of the window height minus half of the ball size
+        // Startposition mittig des Fensters
+        this.x = windowWidth / 2 - 5;
+        this.y = windowHeight / 2 - 5;
 
-        // Set random starting movement direction of the ball
         setRandomDirection();
 
-        // Set ball speed
-        this.speed = 2;
-        this.size = 10; // Default size of the ball
+        this.speed = defaultSpeed;
+        this.size = 10;
     }
 
     private void setRandomDirection() {
         Random random = new Random();
-        dx = random.nextBoolean() ? 1 : -1; // Either 1 (right) or -1 (left)
-        dy = random.nextBoolean() ? 1 : -1; // Either 1 (down) or -1 (up)
+        dx = random.nextBoolean() ? 1 : -1;
+        dy = random.nextBoolean() ? 1 : -1;
     }
 
     public void move() {
-        // Move the ball based on the current speed and direction
+        // Weiterführende Bewegung des Balls
         x += dx * speed;
         y += dy * speed;
     }
 
     public void draw(Graphics g) {
-        // Draw the ball
+        // Erstellt den Ball
         g.setColor(Color.WHITE);
-        g.fillRect(x, y, size, size);
+        g.fillOval(x, y, size, size);
     }
-
-    // Additional methods to manage ball movement and direction...
 
     public void changeDirectionX() {
         dx = -dx;
@@ -64,34 +61,20 @@ public class Ball {
 
     public void reset(int windowWidth, int windowHeight) {
         // Reset the ball to the center of the window
-        this.x = windowWidth / 2 - 5; // Half of the window width minus half of the ball size
-        this.y = windowHeight / 2 - 5; // Half of the window height minus half of the ball size
+        this.x = windowWidth / 2 - 5;
+        this.y = windowHeight / 2 - 5;
         setRandomDirection();
     }
 
+    public void resetSpeed() {
+        this.speed = defaultSpeed; // Setze die Geschwindigkeit auf die Standardgeschwindigkeit zurück
+    }
 
-    // New methods added:
     public void setSpeed(int speed) {
         this.speed = speed;
     }
 
     public int getSpeed() {
         return speed;
-    }
-
-    public void setDx(int dx) {
-        this.dx = dx;
-    }
-
-    public int getDx() {
-        return dx;
-    }
-
-    public void setDy(int dy) {
-        this.dy = dy;
-    }
-
-    public int getDy() {
-        return dy;
     }
 }

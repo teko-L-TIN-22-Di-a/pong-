@@ -1,4 +1,4 @@
-package src.main.java.ch.teko.loefflee;
+/*package src.main.java.ch.teko.loefflee;
 
 public class AlternateUpDownMovement {
     private static boolean moveUp = true;
@@ -12,3 +12,4 @@ public class AlternateUpDownMovement {
         moveUp = !moveUp;
     }
 }
+*/

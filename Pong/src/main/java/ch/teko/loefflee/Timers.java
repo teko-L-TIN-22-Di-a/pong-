@@ -10,7 +10,7 @@ public class Timers {
 
     public Timers(SpecialEffects specialEffects) {
         this.specialEffects = specialEffects;
-        this.resetTimer = new Timer(); // Initialisieren Sie resetTimer hier
+        this.resetTimer = new Timer();
     }
 
     public void startEffectTimer() {
@@ -18,8 +18,8 @@ public class Timers {
         effectTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                specialEffects.activateRandomEffect(); // Aktiviere einen zufälligen Effekt
-                startResetTimer(); // Starte den Reset-Timer nach 10 Sekunden
+                specialEffects.activateRandomEffect(); // Aktiviere zufälligen Effekt
+                startResetTimer(); // Starte Reset-Timer nach 10 Sekunden
             }
         }, 0, 15000); // Starte sofort, wiederhole alle 15 Sekunden
     }

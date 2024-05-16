@@ -1,4 +1,4 @@
-package src.main.java.ch.teko.loefflee;
+/*package src.main.java.ch.teko.loefflee;
 
 import javax.swing.*;
 
@@ -12,3 +12,4 @@ public class Main {
         frame.setVisible(true);
     }
 }
+*/

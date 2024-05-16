@@ -15,10 +15,8 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     private int cpuScore;
 
     private Timer timer;
-    private SpecialEffects specialEffects; // Hinzufügen der specialEffects-Instanz
+    private SpecialEffects specialEffects; // Hinzufügen der specialEffects-
 
-    // Variable for paddle speed
-    private int paddleSpeed = 2;
 
     public Pong() {
         setFocusable(true);
@@ -46,8 +44,8 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
 
-        // Determine the width and height of the playing field based on the current window size
-        int borderWidth = 0; // Border width
+        // Feldgrösse = Fenstergrösse
+        int borderWidth = 0;
         int fieldWidth = getWidth() - 2 * borderWidth;
         int fieldHeight = getHeight() - 2 * borderWidth;
 
@@ -57,7 +55,7 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.drawString("Player: " + playerScore, 10, 20);
-        g.drawString("CPU: " + cpuScore, getWidth() - 100, getHeight() - 20); // Score display at the bottom
+        g.drawString("CPU: " + cpuScore, getWidth() - 100, getHeight() - 20);
 
         ball.draw(g);
         playerPaddle.draw(g);
@@ -70,14 +68,14 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
 
         int ballX = ball.getX();
         int ballY = ball.getY();
-        int ballSize = ball.getSize(); // Get ball size
+        int ballSize = ball.getSize();
 
-        // Check and bounce if the ball reaches the top or bottom boundaries
+        // Check and bounce bei Kontakt mit Decke & Boden
         if (ballY <= 0 || ballY >= getHeight() - ballSize) {
             ball.changeDirectionY();
         }
 
-        // Check and bounce if the ball collides with the player or CPU paddle
+        // Check and bounce bei Kontakt mit Paddles
         if (ballX <= playerPaddle.getX() + playerPaddle.getWidth() && ballY >= playerPaddle.getY() && ballY <= playerPaddle.getY() + playerPaddle.getHeight()) {
             ball.changeDirectionX();
         }
@@ -86,7 +84,7 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
             ball.changeDirectionX();
         }
 
-        // Check and increase score as well as reset the ball if it leaves the playing field
+        // Score count
         if (ballX < 0) {
             cpuScore++;
             ball.reset(getWidth(), getHeight());
@@ -97,10 +95,8 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
             ball.reset(getWidth(), getHeight());
         }
 
-        // Movement of the CPU paddle
         cpuPaddle.move(ballY, getHeight(), getWidth());
 
-        // Check for special effects activation
         specialEffects.activateRandomEffect();
 
         // Redraw the playing field

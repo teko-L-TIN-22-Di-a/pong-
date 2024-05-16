@@ -8,7 +8,7 @@ public class Ball {
     public int dx, dy;
     private int speed;
     private int size;
-    private int defaultSpeed = 3; // Standardgeschwindigkeit des Balls
+    private int defaultSpeed = 3; // Ball speed
 
     public Ball(int windowWidth, int windowHeight) {
         // Startposition mittig des Fensters
@@ -67,7 +67,7 @@ public class Ball {
     }
 
     public void resetSpeed() {
-        this.speed = defaultSpeed; // Setze die Geschwindigkeit auf die Standardgeschwindigkeit zurück
+        this.speed = defaultSpeed; // Setzt die Geschwindigkeit auf die Standardgeschwindigkeit zurück
     }
 
     public void setSpeed(int speed) {

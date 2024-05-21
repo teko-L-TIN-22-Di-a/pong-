@@ -1,15 +1,81 @@
-/*package src.main.java.ch.teko.loefflee;
+import java.awt.*;
+import java.util.Random;
 
-import javax.swing.*;
+public class Ball {
+    private int x, y;
+    public int dx, dy;
+    private int speed;
+    private int size;
+    private int defaultSpeed = 3; // Ball speed
 
-public class Main {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Pong+");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(815, 630);
-        frame.setResizable(true);
-        frame.add(new src.main.java.ch.teko.loefflee.Pong());
-        frame.setVisible(true);
+    public Ball(int windowWidth, int windowHeight) {
+        // Startposition mittig des Fensters
+        this.x = windowWidth / 2 - 5;
+        this.y = windowHeight / 2 - 5;
+
+        setRandomDirection();
+
+        this.speed = defaultSpeed;
+        this.size = 10;
+    }
+
+    private void setRandomDirection() {
+        Random random = new Random();
+        dx = random.nextBoolean() ? 1 : -1;
+        dy = random.nextBoolean() ? 1 : -1;
+    }
+
+    public void move() {
+        x += dx * speed;
+        y += dy * speed;
+    }
+
+    public void draw(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillOval(x, y, size, size);
+    }
+
+    public void changeDirectionX() {
+        dx = -dx;
+    }
+
+    public void changeDirectionY() {
+        dy = -dy;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void reset(int windowWidth, int windowHeight) {
+        // Reset the ball to the center of the window
+        this.x = windowWidth / 2 - 5;
+        this.y = windowHeight / 2 - 5;
+        setRandomDirection();
+    }
+
+    public void resetSpeed() {
+        this.speed = defaultSpeed; // Setzt die Geschwindigkeit auf die Standardgeschwindigkeit zurück
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }
-*/
+
+/* timer löschen, debugging, pong machen bis funktioniert
+special effects müssen bei berührung von paddle ausgelöst werden
+doubleballspeed = ROT
+ */

@@ -1,26 +1,19 @@
-package src.main.java.ch.teko.loefflee;
-
 import java.awt.*;
 import java.util.Random;
 
 public class Ball {
     private int x, y;
-    public int dx, dy;
     private int speed;
     private int size;
-    private int defaultSpeed = 3; // Ball speed
+    private string color;
 
-    public Ball(int windowWidth, int windowHeight) {
-        // Startposition mittig des Fensters
-        this.x = windowWidth / 2 - 5;
-        this.y = windowHeight / 2 - 5;
-
-        setRandomDirection();
-
-        this.speed = defaultSpeed;
+    public Ball(int x, int y) {
+        this.x = x / 2 - 5;
+        this.y = y / 2 - 5;
+        this.speed = 3;
         this.size = 10;
+        this.color = Color.WHITE
     }
-
     private void setRandomDirection() {
         Random random = new Random();
         dx = random.nextBoolean() ? 1 : -1;
@@ -34,9 +27,11 @@ public class Ball {
     }
 
     public void draw(Graphics g) {
-        // Erstellt den Ball
-        g.setColor(Color.WHITE);
         g.fillOval(x, y, size, size);
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void changeDirectionX() {
@@ -76,5 +71,13 @@ public class Ball {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public void doubleBallSpeed{
+        this.speed = this.speed * 2;
+    }
+
+    public void resetBallSpeed(){
+        this.speed = 3;
     }
 }

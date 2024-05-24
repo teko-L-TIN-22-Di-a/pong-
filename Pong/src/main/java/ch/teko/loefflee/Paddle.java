@@ -1,19 +1,25 @@
+package ch.teko.loefflee;
+
 import java.awt.*;
 
 public class Paddle {
     private int x, y;
     private int width, height;
     private int speed;
+    private Color color;
     private boolean isCpu;
 
-    public Paddle(int x, int y, int width, int height, int speed, boolean isCpu) {
+
+    public Paddle(int x, int y, int width, int height, int speed, Color color, boolean isCpu) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.speed = speed;
+        this.color = color;
         this.isCpu = isCpu;
     }
+
 
     public void moveUp() {
         y -= speed;
@@ -24,7 +30,7 @@ public class Paddle {
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.WHITE);
+        g.setColor(color);
         g.fillRect(x, y, width, height);
     }
 
@@ -48,8 +54,8 @@ public class Paddle {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public void move(int ballY, int windowHeight, int windowWidth) {
@@ -74,11 +80,13 @@ public class Paddle {
         }
     }
 
-    public void halvedPaddleSize{
+    public void halvedPaddleSize() {
         this.height = this.height / 2;
+        setColor(Color.GRAY);
     }
 
-    public void resetPaddleSize{
+    public void resetPaddleSize() {
         this.height = 60;
+        setColor(Color.WHITE);
     }
 }

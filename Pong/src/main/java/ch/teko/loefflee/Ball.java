@@ -7,7 +7,7 @@ public class Ball {
     private int x, y, dx, dy;
     private int speed;
     private int size;
-    private boolean doubleBallSpeedIsNotOn;
+    private boolean doubleBallSpeedIsOn;
     private Color color;
     private long lastResetTime;
 
@@ -17,7 +17,7 @@ public class Ball {
         this.y = windowHeight / 2 - 5;
         this.speed = 3;
         this.size = 13;
-        this.doubleBallSpeedIsNotOn = false;
+        this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
         lastResetTime = System.currentTimeMillis();
         setRandomDirection();
@@ -32,11 +32,14 @@ public class Ball {
     public void move() {
         long currentTime = System.currentTimeMillis();
         long elapsedTime = currentTime - lastResetTime;
-
         if (elapsedTime < 1000) {
             x += dx * (speed / 2);
             y += dy * (speed / 2);
+            this.color = Color.GRAY;
         } else {
+            if (this.doubleBallSpeedIsOn == false) {
+                this.color = Color.WHITE;
+            }
             x += dx * speed;
             y += dy * speed;
         }
@@ -82,13 +85,13 @@ public class Ball {
 
     public void doubleBallSpeed() {
         this.speed = this.speed * 2;
-        this.doubleBallSpeedIsNotOn = true;
+        this.doubleBallSpeedIsOn = true;
         this.color = Color.RED;
     }
 
     public void resetBallSpeed(){
         this.speed = 3;
-        this.doubleBallSpeedIsNotOn = false;
+        this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
     }
 }

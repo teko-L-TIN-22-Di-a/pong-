@@ -1,3 +1,10 @@
+/*
+git add .
+git commit -m "text"
+git push
+ */
+
+
 package ch.teko.loefflee;
 
 import javax.swing.*;
@@ -71,12 +78,12 @@ public class Main extends JPanel implements KeyListener {
 
         // Check and bounce bei Kontakt mit Paddles
         if (ballX <= playerPaddle.getX() + playerPaddle.getWidth() && ballY >= playerPaddle.getY() && ballY <= playerPaddle.getY() + playerPaddle.getHeight()) {
-            randyRandomEffectUse();
+            randyRandomEffectUse(playerPaddle);
             ball.changeDirectionX();
         }
 
         if (ballX >= cpuPaddle.getX() - ballSize && ballY >= cpuPaddle.getY() && ballY <= cpuPaddle.getY() + cpuPaddle.getHeight()) {
-            randyRandomEffectUse();
+            randyRandomEffectUse(cpuPaddle);
             ball.changeDirectionX();
         }
 
@@ -105,18 +112,15 @@ public class Main extends JPanel implements KeyListener {
         random = new Random();
     }
 
-    public void randyRandomEffectUse() {
+    public void randyRandomEffectUse(Paddle paddle) {
         int randomNumber = random.nextInt(3);
 
         switch (randomNumber) {
             case 0:
                 ball.doubleBallSpeed();
                 break;
-            case 1:
-                cpuPaddle.halvedPaddleSize();
-                break;
-            case 2:
-                playerPaddle.halvedPaddleSize();
+            case 1, 2:
+                paddle.halvedPaddleSize();
                 break;
         }
     }
@@ -165,12 +169,6 @@ public class Main extends JPanel implements KeyListener {
 
 
 /*
-actionlistener
-
-
 todo:
-- cpu paddle hit ball -> cpu halbiert oder balldoublespeed
-- player paddle hit ball -> player halbiert oder balldoublespeed
-
 
  */

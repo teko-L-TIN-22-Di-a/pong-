@@ -13,6 +13,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
 
+/**
+* Main Klasse
+ */
 public class Main extends JPanel implements KeyListener {
     private Ball ball;
     private Paddle playerPaddle;
@@ -21,7 +24,9 @@ public class Main extends JPanel implements KeyListener {
     private int cpuScore;
     private Random random;
 
-
+   /**
+   * Erstellt Paddles, Ball und Scores
+    */
     public Main() {
         setFocusable(true);
         addKeyListener(this);
@@ -42,11 +47,16 @@ public class Main extends JPanel implements KeyListener {
         randyRandomEffect();
     }
 
+    /**
+    * Erstellt Spielfeld
+    * Passt das Spielfeld an die Fenstergrösse an -> resizable
+    * Zeichnet Ball und Paddles
+    * Erstellt Punkteanzeige für beide Spieler
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
 
-        // Feldgrösse = Fenstergrösse
         int borderWidth = 0;
         int fieldWidth = getWidth() - 2 * borderWidth;
         int fieldHeight = getHeight() - 2 * borderWidth;
@@ -63,8 +73,14 @@ public class Main extends JPanel implements KeyListener {
         cpuPaddle.draw(g);
     }
 
+    /**
+    * Aktualisiert die Position des Balls
+    * Lässt den Ball an Paddles, Decke und Boden abprallen
+    * Führt randyRandomEffect bei Berührung der Paddles aus
+    * Erhöht Punktzahl um 1 bei Tor
+    * Bewegt das CPU Paddle anhand der Y-Achse des Balls
+     */
     public void updateGame() {
-        // Update ball position
         ball.move();
 
         int ballX = ball.getX();
@@ -103,7 +119,6 @@ public class Main extends JPanel implements KeyListener {
 
         cpuPaddle.move(ballY, getHeight(), getWidth());
 
-        // Redraw the playing field
         repaint();
     }
 
@@ -112,6 +127,11 @@ public class Main extends JPanel implements KeyListener {
         random = new Random();
     }
 
+    /**
+    * Führt Spezialeffekte aus
+    * 33% für boubleBallSpeed
+    * 66% für halvedPaddleSize
+     */
     public void randyRandomEffectUse(Paddle paddle) {
         int randomNumber = random.nextInt(3);
 
@@ -125,7 +145,9 @@ public class Main extends JPanel implements KeyListener {
         }
     }
 
-
+    /**
+    * Bewegt das Player Paddle mit "W" und "S"
+     */
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
@@ -142,6 +164,9 @@ public class Main extends JPanel implements KeyListener {
 
     public void keyTyped(KeyEvent e) {}
 
+    /**
+    * Started das Spiel
+     */
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pong+");
         Main game = new Main();

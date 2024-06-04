@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html"},{"p":"ch.teko.loefflee","l":"Ball"},{"p":"ch.teko.loefflee","l":"Main"},{"p":"ch.teko.loefflee","l":"Paddle"}];updateSearchResults();

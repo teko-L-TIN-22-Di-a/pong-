@@ -80,6 +80,7 @@ public class Main extends JPanel implements KeyListener {
     * Erhöht Punktzahl um 1 bei Tor
     * Bewegt das CPU Paddle anhand der Y-Achse des Balls
      */
+
     public void updateGame() {
         ball.move();
 
@@ -129,11 +130,12 @@ public class Main extends JPanel implements KeyListener {
 
     /**
     * Führt Spezialeffekte aus
-    * 33% für boubleBallSpeed
-    * 66% für halvedPaddleSize
+    * 25% für boubleBallSpeed
+    * 50% für halvedPaddleSize
+     * 25% für Wind
      */
     public void randyRandomEffectUse(Paddle paddle) {
-        int randomNumber = random.nextInt(3);
+        int randomNumber = random.nextInt(4);
 
         switch (randomNumber) {
             case 0:
@@ -141,6 +143,9 @@ public class Main extends JPanel implements KeyListener {
                 break;
             case 1, 2:
                 paddle.halvedPaddleSize();
+                break;
+            case 3:
+                ball.applyWind();
                 break;
         }
     }

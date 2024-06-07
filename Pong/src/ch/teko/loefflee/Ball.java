@@ -10,6 +10,7 @@ public class Ball {
     private int speed;
     private int size;
     private boolean doubleBallSpeedIsOn;
+    private Wind wind;
     private Color color;
     private long lastResetTime;
 
@@ -23,6 +24,7 @@ public class Ball {
         this.size = 13;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
+        this.wind = new Wind();
         lastResetTime = System.currentTimeMillis();
         setRandomDirection();
     }
@@ -88,6 +90,24 @@ public class Ball {
     public int getSize() {
         return size;
     }
+
+
+
+    /**
+     *
+     * @param x positive Zahlen bewegen den Ball nach rechts, negative nach links
+     * @param y positive Zahlen bewegen den Ball nach unten, negative nach oben
+     */
+    public void manipulatexy (int x, int y) {
+        this.x += x;
+        this.y += y;
+    }
+
+    public void applyWind () {
+        wind.randomWind();
+        manipulatexy(wind.getX(), wind.getY());
+    }
+
 
     /**
     * Respawnt den ball in der Mitte des Spielfeldes

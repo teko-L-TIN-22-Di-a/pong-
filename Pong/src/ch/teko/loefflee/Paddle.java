@@ -76,7 +76,7 @@ public class Paddle {
     public void move(int ballY, int windowHeight, int windowWidth) {
         if (this.isCpu) {
 
-            int speed = 2;
+            int speed = 3;
 
             if (ballY < y + height / 2) {
                 y -= speed;

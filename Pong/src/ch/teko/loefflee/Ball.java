@@ -104,6 +104,7 @@ public class Ball {
     }
 
     public void applyWind () {
+        System.out.println("WIND IN BALL");
         wind.randomWind();
         manipulatexy(wind.getX(), wind.getY());
     }
@@ -131,7 +132,7 @@ public class Ball {
     /**
     * Setzt Ballgeschwindigkeit zurück
      */
-    public void resetBallSpeed(){
+    public void resetBallSpeed() {
         this.speed = 3;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;

@@ -140,12 +140,15 @@ public class Main extends JPanel implements KeyListener {
         switch (randomNumber) {
             case 0:
                 ball.doubleBallSpeed();
+                System.out.println("BALL");
                 break;
             case 1, 2:
                 paddle.halvedPaddleSize();
+                System.out.println("PADDLE");
                 break;
             case 3:
                 ball.applyWind();
+                System.out.println("WIND");
                 break;
         }
     }

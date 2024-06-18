@@ -23,6 +23,9 @@ public class Main extends JPanel implements KeyListener {
     private int playerScore;
     private int cpuScore;
     private Random random;
+    private Wind wind;
+    private boolean effectApplied;
+
 
    /**
    * Erstellt Paddles, Ball und Scores
@@ -44,6 +47,8 @@ public class Main extends JPanel implements KeyListener {
         playerScore = 0;
         cpuScore = 0 - 1;
 
+        effectApplied = false;
+        wind = new Wind();
         randyRandomEffect();
     }
 
@@ -95,13 +100,17 @@ public class Main extends JPanel implements KeyListener {
 
         // Check and bounce bei Kontakt mit Paddles
         if (ballX <= playerPaddle.getX() + playerPaddle.getWidth() && ballY >= playerPaddle.getY() && ballY <= playerPaddle.getY() + playerPaddle.getHeight()) {
-            randyRandomEffectUse(playerPaddle);
-            ball.changeDirectionX();
+            if (!effectApplied) {
+                randyRandomEffectUse(playerPaddle);
+                ball.changeDirectionX();
+            }
         }
 
         if (ballX >= cpuPaddle.getX() - ballSize && ballY >= cpuPaddle.getY() && ballY <= cpuPaddle.getY() + cpuPaddle.getHeight()) {
-            randyRandomEffectUse(cpuPaddle);
-            ball.changeDirectionX();
+            if (!effectApplied) {
+                randyRandomEffectUse(cpuPaddle);
+                ball.changeDirectionX();
+            }
         }
 
         if (ballX < 0) {
@@ -147,7 +156,8 @@ public class Main extends JPanel implements KeyListener {
                 System.out.println("PADDLE");
                 break;
             case 3:
-                ball.applyWind();
+                wind.randomWind();
+                ball.applyWind(wind.getX(), wind.getY());
                 System.out.println("WIND");
                 break;
         }

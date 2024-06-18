@@ -103,10 +103,10 @@ public class Ball {
         this.y += y;
     }
 
-    public void applyWind () {
+    public void applyWind (int dx, int dy) {
         System.out.println("WIND IN BALL");
         wind.randomWind();
-        manipulatexy(wind.getX(), wind.getY());
+        manipulatexy(dx, dy);
     }
 
 

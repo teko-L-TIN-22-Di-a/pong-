@@ -10,7 +10,6 @@ public class Ball {
     private int speed;
     private int size;
     private boolean doubleBallSpeedIsOn;
-    private Wind wind;
     private Color color;
     private long lastResetTime;
 
@@ -24,7 +23,6 @@ public class Ball {
         this.size = 13;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
-        this.wind = new Wind();
         lastResetTime = System.currentTimeMillis();
         setRandomDirection();
     }
@@ -103,9 +101,10 @@ public class Ball {
         this.y += y;
     }
 
-    public void applyWind (int dx, int dy) {
+    public void applyWind (int windX, int windY) {
+        dx += windX;
+        dy += windY;
         System.out.println("WIND IN BALL");
-        wind.randomWind();
         manipulatexy(dx, dy);
     }
 

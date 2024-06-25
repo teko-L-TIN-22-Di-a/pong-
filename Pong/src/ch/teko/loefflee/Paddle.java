@@ -3,7 +3,7 @@ package ch.teko.loefflee;
 import java.awt.*;
 
 /**
-* Paddle Klasse
+ * Paddle-Klasse, die ein Paddle im Pong-Spiel repräsentiert.
  */
 public class Paddle {
     private int x, y;
@@ -12,10 +12,18 @@ public class Paddle {
     private Color color;
     private boolean isCpu;
 
-/**
-* Paddle Konstruktor
- * Grösse, Farbe, Form, Geschwindigkeit, CPU/Player
- */
+    /**
+     * Konstruktor für das Paddle.
+     * Initialisiert Größe, Farbe, Form, Geschwindigkeit und ob es ein CPU- oder Spieler-Paddle ist.
+     *
+     * @param x       die X-Position des Paddles
+     * @param y       die Y-Position des Paddles
+     * @param width   die Breite des Paddles
+     * @param height  die Höhe des Paddles
+     * @param speed   die Geschwindigkeit des Paddles
+     * @param color   die Farbe des Paddles
+     * @param isCpu   ob das Paddle von der CPU gesteuert wird
+     */
     public Paddle(int x, int y, int width, int height, int speed, Color color, boolean isCpu) {
         this.x = x;
         this.y = y;
@@ -27,27 +35,28 @@ public class Paddle {
     }
 
     /**
-    * Geschwindigkeit der Paddles
+     * Bewegt das Paddle nach oben.
      */
     public void moveUp() {
         y -= speed;
     }
 
     /**
-    * Geschwindigkeit der Paddles
+     * Bewegt das Paddle nach unten.
      */
     public void moveDown() {
         y += speed;
     }
 
     /**
-    * Zeichnet das rechteckige Paddle
+     * Zeichnet das Paddle als Rechteck.
+     *
+     * @param g das Grafikobjekt zum Zeichnen
      */
     public void draw(Graphics g) {
         g.setColor(color);
         g.fillRect(x, y, width, height);
     }
-
 
     public int getX() {
         return x;
@@ -70,12 +79,15 @@ public class Paddle {
     }
 
     /**
-    * Unterscheidet zwischen CPU und Player Paddle
-    * Limitiert die Bewegung der Paddles -> Decke und Boden
+     * Bewegt das CPU-Paddle entsprechend der Y-Position des Balls.
+     * Limitiert die Bewegung des Paddles, sodass es nicht über die Decke oder den Boden hinausgeht.
+     *
+     * @param ballY         die Y-Position des Balls
+     * @param windowHeight  die Höhe des Fensters
+     * @param windowWidth   die Breite des Fensters
      */
     public void move(int ballY, int windowHeight, int windowWidth) {
         if (this.isCpu) {
-
             int speed = 3;
 
             if (ballY < y + height / 2) {
@@ -96,7 +108,7 @@ public class Paddle {
     }
 
     /**
-    * Spezialeffekt, der die Höhe des Paddles halbiert
+     * Spezialeffekt, der die Höhe des Paddles halbiert.
      */
     public void halvedPaddleSize() {
         this.height = this.height / 2;
@@ -104,7 +116,7 @@ public class Paddle {
     }
 
     /**
-    * Setzt die Grösse zurück
+     * Setzt die Größe des Paddles auf den ursprünglichen Wert zurück.
      */
     public void resetPaddleSize() {
         this.height = 60;

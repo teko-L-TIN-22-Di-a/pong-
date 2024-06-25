@@ -4,7 +4,6 @@ git commit -m "text"
 git push
  */
 
-
 package ch.teko.loefflee;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 /**
-* Main Klasse
+ * Hauptklasse für das Pong-Spiel.
  */
 public class Main extends JPanel implements KeyListener {
     private Ball ball;
@@ -26,10 +25,10 @@ public class Main extends JPanel implements KeyListener {
     private Wind wind;
     private boolean effectApplied;
 
-
-   /**
-   * Erstellt Paddles, Ball und Scores
-    */
+    /**
+     * Konstruktor für die Hauptklasse.
+     * Initialisiert Ball, Paddles und Scores.
+     */
     public Main() {
         setFocusable(true);
         addKeyListener(this);
@@ -53,11 +52,12 @@ public class Main extends JPanel implements KeyListener {
     }
 
     /**
-    * Erstellt Spielfeld
-    * Passt das Spielfeld an die Fenstergrösse an -> resizable
-    * Zeichnet Ball und Paddles
-    * Erstellt Punkteanzeige für beide Spieler
+     * Zeichnet das Spielfeld, Ball und Paddles.
+     * Passt das Spielfeld an die Fenstergröße an und erstellt eine Punkteanzeige für beide Spieler.
+     *
+     * @param g das zu zeichnende Grafikobjekt
      */
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
@@ -79,13 +79,10 @@ public class Main extends JPanel implements KeyListener {
     }
 
     /**
-    * Aktualisiert die Position des Balls
-    * Lässt den Ball an Paddles, Decke und Boden abprallen
-    * Führt randyRandomEffect bei Berührung der Paddles aus
-    * Erhöht Punktzahl um 1 bei Tor
-    * Bewegt das CPU Paddle anhand der Y-Achse des Balls
+     * Aktualisiert die Position des Balls und die Logik des Spiels.
+     * Lässt den Ball an Paddles, Decke und Boden abprallen, führt zufällige Effekte bei Berührung der Paddles aus,
+     * erhöht die Punktzahl bei einem Tor und bewegt das CPU-Paddle entsprechend der Y-Achse des Balls.
      */
-
     public void updateGame() {
         ball.move();
 
@@ -132,16 +129,20 @@ public class Main extends JPanel implements KeyListener {
         repaint();
     }
 
-
+    /**
+     * Initialisiert den Zufallsgenerator für zufällige Effekte.
+     */
     public void randyRandomEffect() {
         random = new Random();
     }
 
     /**
-    * Führt Spezialeffekte aus
-    * 25% für boubleBallSpeed
-    * 50% für halvedPaddleSize
-     * 25% für Wind
+     * Führt zufällige Effekte aus.
+     * 25% Chance für verdoppelte Ballgeschwindigkeit,
+     * 50% Chance für halbierte Paddelgröße,
+     * 25% Chance für Wind.
+     *
+     * @param paddle das Paddle, auf das der Effekt angewendet wird
      */
     public void randyRandomEffectUse(Paddle paddle) {
         int randomNumber = random.nextInt(2);
@@ -151,11 +152,11 @@ public class Main extends JPanel implements KeyListener {
                 ball.doubleBallSpeed();
                 System.out.println("BALL");
                 break;
-            /*case 1, 2:
+            case 1, 2:
                 paddle.halvedPaddleSize();
                 System.out.println("PADDLE");
-                break;*/
-            case 1:
+                break;
+            case 3:
                 wind.randomWind();
                 ball.applyWind(wind.getX(), wind.getY());
                 ball.resetBallSpeed();
@@ -165,8 +166,11 @@ public class Main extends JPanel implements KeyListener {
     }
 
     /**
-    * Bewegt das Player Paddle mit "W" und "S"
+     * Bewegt das Spieler-Paddle mit den Tasten "W" und "S".
+     *
+     * @param e das KeyEvent-Objekt
      */
+    @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
@@ -179,12 +183,16 @@ public class Main extends JPanel implements KeyListener {
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {}
 
+    @Override
     public void keyTyped(KeyEvent e) {}
 
     /**
-    * Started das Spiel
+     * Startet das Spiel.
+     *
+     * @param args die Kommandozeilenargumente
      */
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pong+");
@@ -207,14 +215,3 @@ public class Main extends JPanel implements KeyListener {
     }
 }
 
-
-
-
-
-
-/*
-todo:
-update wind in jedem frame mit timer
-timer wird im hintergrund heruntergezählt
-
- */

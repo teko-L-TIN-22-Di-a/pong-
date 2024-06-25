@@ -2,8 +2,9 @@ package ch.teko.loefflee;
 
 import java.awt.*;
 import java.util.Random;
+
 /**
-* Ball Klasse
+ * Ball-Klasse, die den Ball im Pong-Spiel repräsentiert.
  */
 public class Ball {
     private int x, y, dx, dy;
@@ -13,9 +14,13 @@ public class Ball {
     private Color color;
     private long lastResetTime;
 
-/**
-* Ball spawnt in der Mitte des Spielfeldes und gibt Farbe, Grösse und Geschwindigkeit an.
- */
+    /**
+     * Konstruktor für den Ball.
+     * Der Ball spawnt in der Mitte des Spielfelds und wird mit Farbe, Größe und Geschwindigkeit initialisiert.
+     *
+     * @param windowWidth  die Breite des Fensters
+     * @param windowHeight die Höhe des Fensters
+     */
     public Ball(int windowWidth, int windowHeight) {
         this.x = windowWidth / 2 - 5;
         this.y = windowHeight / 2 - 5;
@@ -26,8 +31,9 @@ public class Ball {
         lastResetTime = System.currentTimeMillis();
         setRandomDirection();
     }
+
     /**
-    * Random Richtung nach spawn
+     * Setzt eine zufällige Richtung für den Ball nach dem Spawn.
      */
     private void setRandomDirection() {
         Random random = new Random();
@@ -36,9 +42,9 @@ public class Ball {
     }
 
     /**
-    * Gibt Bewegung des Balls an.
-    * 1. Sekunde nach spawn mit halber Geschwindigkeit und grau.
-    * Danach Normale Geschwindigkeit und weiss.
+     * Bewegt den Ball.
+     * In der ersten Sekunde nach dem Spawn bewegt sich der Ball mit halber Geschwindigkeit und ist grau gefärbt.
+     * Danach bewegt er sich mit normaler Geschwindigkeit und ist weiß.
      */
     public void move() {
         long currentTime = System.currentTimeMillis();
@@ -48,7 +54,7 @@ public class Ball {
             y += dy * (speed / 2);
             this.color = Color.GRAY;
         } else {
-            if (this.doubleBallSpeedIsOn == false) {
+            if (!this.doubleBallSpeedIsOn) {
                 this.color = Color.WHITE;
             }
             x += dx * speed;
@@ -57,7 +63,9 @@ public class Ball {
     }
 
     /**
-    * Zeichnet den Ball rund
+     * Zeichnet den Ball als Kreis.
+     *
+     * @param g das Grafikobjekt zum Zeichnen
      */
     public void draw(Graphics g) {
         g.setColor(color);
@@ -65,13 +73,14 @@ public class Ball {
     }
 
     /**
-    * Einfallswinkel = Ausfallwinkel
+     * Ändert die Richtung des Balls auf der X-Achse (Einfallswinkel = Ausfallswinkel).
      */
     public void changeDirectionX() {
         dx = -dx;
     }
+
     /**
-    * Einfallswinkel = Ausfallwinkel
+     * Ändert die Richtung des Balls auf der Y-Achse (Einfallswinkel = Ausfallswinkel).
      */
     public void changeDirectionY() {
         dy = -dy;
@@ -89,29 +98,36 @@ public class Ball {
         return size;
     }
 
-
-
     /**
+     * Manipuliert die Position des Balls.
      *
      * @param x positive Zahlen bewegen den Ball nach rechts, negative nach links
      * @param y positive Zahlen bewegen den Ball nach unten, negative nach oben
      */
-    public void manipulatexy (int x, int y) {
+    public void manipulatexy(int x, int y) {
         this.x += x;
         this.y += y;
     }
 
-    public void applyWind (int windX, int windY) {
+    /**
+     * Wendet Windkraft auf den Ball an.
+     *
+     * @param windX Windstärke auf der X-Achse
+     * @param windY Windstärke auf der Y-Achse
+     */
+    public void applyWind(int windX, int windY) {
         dx += windX;
         dy += windY;
         System.out.println("WIND IN BALL");
         manipulatexy(dx, dy);
     }
 
-
     /**
-    * Respawnt den ball in der Mitte des Spielfeldes
-    */
+     * Setzt den Ball in die Mitte des Spielfelds zurück.
+     *
+     * @param windowWidth  die Breite des Fensters
+     * @param windowHeight die Höhe des Fensters
+     */
     public void reset(int windowWidth, int windowHeight) {
         this.x = windowWidth / 2 - 5;
         this.y = windowHeight / 2 - 5;
@@ -121,15 +137,16 @@ public class Ball {
     }
 
     /**
-    * Spezialeffekt, welche die Ballgeschwindigkeit verdoppelt
+     * Verdoppelt die Geschwindigkeit des Balls als Spezialeffekt.
      */
     public void doubleBallSpeed() {
         this.speed = this.speed * 2;
         this.doubleBallSpeedIsOn = true;
         this.color = Color.RED;
     }
+
     /**
-    * Setzt Ballgeschwindigkeit zurück
+     * Setzt die Geschwindigkeit des Balls auf den ursprünglichen Wert zurück.
      */
     public void resetBallSpeed() {
         this.speed = 3;

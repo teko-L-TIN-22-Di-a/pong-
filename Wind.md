@@ -2,7 +2,6 @@
 
 Die Wind-Klasse im Pong-Spiel simuliert zufällige Windstärken, die die Bewegung des Balls beeinflussen und so für zusätzliche Herausforderungen und unvorhersehbare Momente im Spiel sorgen. Der Wind kann die Richtung des Balls verändern.
 
-## Eigenschaften
 Die Wind-Klasse hat zwei wesentliche Eigenschaften:
 x: Die Windstärke auf der X-Achse.
 y: Die Windstärke auf der Y-Achse.

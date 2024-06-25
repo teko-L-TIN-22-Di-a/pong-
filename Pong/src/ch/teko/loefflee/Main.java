@@ -144,20 +144,21 @@ public class Main extends JPanel implements KeyListener {
      * 25% für Wind
      */
     public void randyRandomEffectUse(Paddle paddle) {
-        int randomNumber = random.nextInt(4);
+        int randomNumber = random.nextInt(2);
 
         switch (randomNumber) {
             case 0:
                 ball.doubleBallSpeed();
                 System.out.println("BALL");
                 break;
-            case 1, 2:
+            /*case 1, 2:
                 paddle.halvedPaddleSize();
                 System.out.println("PADDLE");
-                break;
-            case 3:
+                break;*/
+            case 1:
                 wind.randomWind();
                 ball.applyWind(wind.getX(), wind.getY());
+                ball.resetBallSpeed();
                 System.out.println("WIND");
                 break;
         }
@@ -213,5 +214,7 @@ public class Main extends JPanel implements KeyListener {
 
 /*
 todo:
+update wind in jedem frame mit timer
+timer wird im hintergrund heruntergezählt
 
  */

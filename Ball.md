@@ -7,3 +7,5 @@ Die Richtung des [Balls](Ball.md) wird zufällig festgelegt, sodass er entweder 
 Wenn der [Ball](Ball.md) an die Ränder des Spielfelds stößt, ändert er seine Richtung entsprechend den physikalischen Gesetzen des Einfallswinkels, sodass er in die entgegengesetzte Richtung zurückprallt. Diese Richtungsänderungen werden durch die Methoden changeDirectionX() und changeDirectionY() gesteuert.
 
 Der [Ball](Ball.md) kann durch verschiedene Effekte beeinflusst werden. Beispielsweise kann die Geschwindigkeit des [Balls](Ball.md) vorübergehend verdoppelt werden, wodurch er rot wird, oder er kann durch [Wind](Wind.md)kräfte abgelenkt werden. Diese Effekte sorgen für zusätzliche Dynamik und Herausforderungen im Spiel.
+
+[Javadoc](Pong/src/ch/teko/loefflee/BallDoc.java)

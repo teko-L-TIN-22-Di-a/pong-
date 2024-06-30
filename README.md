@@ -11,7 +11,8 @@ Alles wird vom [Main](Main.md) aus gesteuert.
 [Wind](Wind.md)-Element: Der [Wind](Wind.md) beeinflusst die Flugbahn des [Balls](Ball.md), indem er ihn in verschiedene Richtungen drückt oder zieht. Die Stärke und Richtung des [Winds](Wind.md) soll sich während des Spiels ändern. Pong+ wird in 2D erstellt.
 
 ## Implementierung:
-Pong+ wurde mit Java entwickelt und verwendet grundlegende Konzepte der Spieleentwicklung und Objektorientierung. Die Implementierung umfasst die folgenden Hauptkomponenten:
+Pong+ wurde mit Java entwickelt und verwendet grundlegende Konzepte der Spieleentwicklung und Objektorientierung.
+Die einzelnen Schritte werden in [ToDo](Todo.md) festgehalten.
 
 ## Spielfeld: 
 Das Spielfeld ist die zentrale Komponente des Spiels und enthält die Schläger der Spieler sowie den [Ball](Ball.md). Es verwaltet die Kollisionen zwischen den Objekten und die Bewegung des [Balls](Ball.md) entsprechend den Spielregeln und dem Einfluss des [Windes](Wind.md).

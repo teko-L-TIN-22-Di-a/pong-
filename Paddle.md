@@ -9,3 +9,5 @@ Die [Paddles](Paddle.md) bewegen sich vertikal entlang des Spielfeldrands. Das S
 Eine besondere Eigenschaft der [Paddles](Paddle.md) ist die Möglichkeit, verschiedene Effekte anzuwenden. Beispielsweise kann die Größe eines [Paddles](Paddle.md) halbiert werden, wodurch es schwieriger wird, den Ball zu treffen. Dieser Effekt wird durch die Methode halvedPaddleSize() aktiviert und macht das [Paddle](Paddle.md) grau. Es gibt auch eine Methode, um die ursprüngliche Größe und Farbe des [Paddles](Paddle.md) wiederherzustellen, resetPaddleSize(), die nach jedem Punkt zurückgesetzt wird.
 
 Die [Paddles](Paddle.md) reagieren auch auf Kollisionen mit dem Ball. Wenn der Ball ein [Paddle](Paddle.md) trifft, prallt er in die entgegengesetzte Richtung ab, was durch die Methode changeDirectionX() des [Balls](Ball.md) ermöglicht wird. Dies sorgt dafür, dass das Spiel dynamisch bleibt und der [Ball](Ball.md) ständig in Bewegung ist.
+
+[Javadoc](Pong/src/ch/teko/loefflee/PaddleDoc.java)

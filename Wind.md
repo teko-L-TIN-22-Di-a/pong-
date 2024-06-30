@@ -12,3 +12,5 @@ Diese Methode generiert zufällige [Wind](Wind.md)stärken für die X- und Y-Ach
 Wenn die randomWind()-Methode aufgerufen wird, ändert sich die [Wind](Wind.md)stärke zufällig. Diese Werte werden dann genutzt, um die Bewegung des [Balls](Ball.md) zu beeinflussen.
 
 Im Spiel wird der [Wind](Wind.md) angewendet, indem die Methode applyWind(int windX, int windY) des [Ball](Ball.md)-Objekts aufgerufen wird. Diese Methode addiert die Windstärken zu den aktuellen Bewegungsrichtungen des [Balls](Ball.md) (dx und dy), wodurch der [Ball](Ball.md) eine zusätzliche Bewegungskomponente erhält, die durch den [Wind](Wind.md) verursacht wird. Dies macht das Spiel unvorhersehbarer und schwieriger, da der Spieler die Bewegung des [Balls](Ball.md) noch genauer einschätzen muss.
+
+[Javadoc](Pong/src/ch/teko/loefflee/WindDoc.java)

@@ -12,7 +12,7 @@ Alles wird vom [Main](Main.md) aus gesteuert.
 
 ## Implementierung:
 Pong+ wurde mit Java entwickelt und verwendet grundlegende Konzepte der Spieleentwicklung und Objektorientierung.
-Die einzelnen Schritte werden in [ToDo](Todo.md) festgehalten.
+Die einzelnen Schritte werden in [ToDo](ToDo.md) festgehalten.
 
 ## Spielfeld: 
 Das Spielfeld ist die zentrale Komponente des Spiels und enthält die Schläger der Spieler sowie den [Ball](Ball.md). Es verwaltet die Kollisionen zwischen den Objekten und die Bewegung des [Balls](Ball.md) entsprechend den Spielregeln und dem Einfluss des [Windes](Wind.md).

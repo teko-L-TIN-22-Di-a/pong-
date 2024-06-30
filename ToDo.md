@@ -10,7 +10,7 @@
 ## ~~Ball- und Paddle-Logik~~
 - Ballgeschwindigkeit und -richtung initialisieren und zufällig setzen
 - Kollisionslogik für Ball und Paddles
-- - Begrenzung der Bewegung des CPU-Paddles, Player-Paddles und Balls innerhalb des Spielfeldes sicherstellen
+- Begrenzung der Bewegung des CPU-Paddles, Player-Paddles und Balls innerhalb des Spielfeldes sicherstellen
 - Ballgeschwindigkeit und Farbe bei Effekten anpassen
 - Paddles bei Effekten in Größe und Farbe verändern
 
@@ -30,6 +30,8 @@
 - Wind-Klasse für zufällige Windstärken implementieren
 - Wind-Effekte auf den Ball anwenden (X- und Y-Achse)
 - Zufällige Auslösung von Wind-Effekten beim Ballkontakt mit Paddles
+- Geschwindigkeit des Balls von Int zu Float ändern (1, 2, 3 ist zu schnell) -> Falls noch nicht gut, nur DY verändern
+- If-Abfrage um eine Doppelberührung des Paddles zu verhindern (Ball trifft Paddle, ändert Richtung um 180° und trifft nochmals gleiches Paddle)
 
 ## Spielmechanik und Logik optimieren
 - Spielmechanik für Sieg und Niederlage implementieren (z.B. bei Punktestand X gewinnen)

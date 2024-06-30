@@ -13,10 +13,14 @@ Wenn die randomWind()-Methode aufgerufen wird, ändert sich die [Wind](Wind.md)s
 
 Im Spiel wird der [Wind](Wind.md) angewendet, indem die Methode applyWind(int windX, int windY) des [Ball](Ball.md)-Objekts aufgerufen wird. Diese Methode addiert die Windstärken zu den aktuellen Bewegungsrichtungen des [Balls](Ball.md) (dx und dy), wodurch der [Ball](Ball.md) eine zusätzliche Bewegungskomponente erhält, die durch den [Wind](Wind.md) verursacht wird. Dies macht das Spiel unvorhersehbarer und schwieriger, da der Spieler die Bewegung des [Balls](Ball.md) noch genauer einschätzen muss.
 
-Die vier ersten Ideen für die Implementation des [Windes](Wind.md:
-[1. Idee](Pong/src/ch/teko/loefflee/docs/Wind1.jpg): [Wind](Wind.md) blässt von links unten nach rechts oben.
-[2. Idee](Pong/src/ch/teko/loefflee/docs/Wind2.jpg): [Wind](Wind.md) blässe von rechts unten nach links oben mit intervalls.
+Die vier ersten Ideen für die Implementation des [Windes](Wind.md):
+
+[1. Idee](Pong/src/ch/teko/loefflee/docs/Wind1.jpg): Wind blässt von links unten nach rechts oben.
+
+[2. Idee](Pong/src/ch/teko/loefflee/docs/Wind2.jpg): Wind blässe von rechts unten nach links oben mit intervalls.
+
 [3. Idee](Pong/src/ch/teko/loefflee/docs/Wind3.jpg): Ein Objekt, welches den [Balls](Ball.md) abprallen lässt.
+
 [4. Idee](Pong/src/ch/teko/loefflee/docs/Wind4.jpg): Ein Objekt, welches nur in einem bestimmten Bereich wirkt.
 
 [Javadoc](Pong/src/ch/teko/loefflee/WindDoc.java)

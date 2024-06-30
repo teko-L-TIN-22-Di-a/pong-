@@ -19,5 +19,5 @@ Schläger: Der Spieler (mit W, S) und der CPU steuern jeweils einen Schläger, d
 [Ball](Ball.md): Der [Ball](Ball.md) bewegt sich innerhalb des Spielfelds und prallt von den Schlägern und den Spielfeldrändern ab. Die Bewegung des [Balls](Ball.md) wird durch die [Wind](Wind.md)stärke und -richtung beeinflusst.
 
 ## Wind-Engine: 
-Die [Wind](Wind.md)-Engine ist verantwortlich für die Berechnung und Anwendung der [Windes](Wind.md)effekte auf den [Ball](Ball.md). Sie simuliert die Veränderungen der [Windes](Wind.md)stärke und -richtung im Spielverlauf.
+Die [Wind](Wind.md)-Engine ist verantwortlich für die Berechnung und Anwendung der [Wind](Wind.md)effekte auf den [Ball](Ball.md). Sie simuliert die Veränderungen der [Wind](Wind.md)stärke und -richtung im Spielverlauf.
 

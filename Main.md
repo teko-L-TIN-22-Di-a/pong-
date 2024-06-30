@@ -27,3 +27,6 @@ Die paintComponent(Graphics g)-Methode zeichnet das Spielfeld, den Ball, die [Pa
 
 ## Zusammenfassung:
 Die [Main](Main.md)-Klasse dient als Schaltzentrale für das Pong-Spiel, das die Spiellogik steuert, die Grafik verwaltet, Benutzereingaben verarbeitet und eine ansprechende Benutzeroberfläche bereitstellt. Durch die Kombination dieser Elemente bietet das Pong-Spiel ein unterhaltsames und interaktives Spielerlebnis für den Benutzer.
+
+
+[Javadoc](Pong/src/ch/teko/loefflee/MainDoc.java)

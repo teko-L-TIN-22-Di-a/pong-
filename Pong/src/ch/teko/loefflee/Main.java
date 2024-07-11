@@ -24,6 +24,7 @@ public class Main extends JPanel implements KeyListener {
     private Random random;
     private Wind wind;
     private boolean effectApplied;
+    private Paddle lastHitPaddle;
 
     /**
      * Konstruktor für die Hauptklasse.
@@ -48,6 +49,7 @@ public class Main extends JPanel implements KeyListener {
 
         effectApplied = false;
         wind = new Wind();
+        lastHitPaddle = null;
         randyRandomEffect();
     }
 
@@ -145,18 +147,18 @@ public class Main extends JPanel implements KeyListener {
      * @param paddle das Paddle, auf das der Effekt angewendet wird
      */
     public void randyRandomEffectUse(Paddle paddle) {
-        int randomNumber = random.nextInt(2);
+        int randomNumber = random.nextInt(1);
 
         switch (randomNumber) {
-            case 0:
+            /*case 0:
                 ball.doubleBallSpeed();
                 System.out.println("BALL");
                 break;
             case 1, 2:
                 paddle.halvedPaddleSize();
                 System.out.println("PADDLE");
-                break;
-            case 3:
+                break; */
+            case 0:
                 wind.randomWind();
                 ball.applyWind(wind.getX(), wind.getY());
                 ball.resetBallSpeed();

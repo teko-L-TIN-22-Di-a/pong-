@@ -115,7 +115,7 @@ public class Ball {
      * @param windX Windstärke auf der X-Achse
      * @param windY Windstärke auf der Y-Achse
      */
-    public void applyWind(int windX, int windY) {
+    public void applyWind(float windX, float windY) {
         dx += windX;
         dy += windY;
         System.out.println("WIND IN BALL");

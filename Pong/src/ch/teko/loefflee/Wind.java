@@ -6,8 +6,8 @@ import java.util.Random;
  * Wind-Klasse, die zufällige Windstärken für das Pong-Spiel generiert.
  */
 public class Wind {
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
     /**
      * Generiert zufällige Windstärken für die X- und Y-Achse.
@@ -16,8 +16,8 @@ public class Wind {
     public void randomWind() {
         Random Rn = new Random();
 
-        int randomNumberx = Rn.nextInt(-3, 3);
-        int randomNumbery = Rn.nextInt(-3, 3);
+        float randomNumberx = Rn.nextFloat((float) -1.5, (float)1.5);
+        float randomNumbery = Rn.nextFloat((float) -2.2, (float) 2.2);
 
         this.x = randomNumberx;
         this.y = randomNumbery;
@@ -28,7 +28,7 @@ public class Wind {
      *
      * @return die Windstärke auf der X-Achse
      */
-    public int getX() {
+    public float getX() {
         return x;
     }
 
@@ -37,7 +37,7 @@ public class Wind {
      *
      * @return die Windstärke auf der Y-Achse
      */
-    public int getY() {
+    public float getY() {
         return y;
     }
 }

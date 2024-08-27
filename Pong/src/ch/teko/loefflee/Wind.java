@@ -8,17 +8,29 @@ import java.util.Random;
 public class Wind {
     private float x;
     private float y;
+    private float randomNumberx;
+    private float randomNumbery;
 
     /**
      * Generiert zufällige Windstärken für die X- und Y-Achse.
      * Die Windstärke variiert zwischen -3 und 3.
+     * @param paddle
      */
-    public void randomWind() {
+    public void randomWind(Paddle paddle) {
         Random Rn = new Random();
 
-        float randomNumberx = Rn.nextFloat((float) -1.5, (float)1.5);
-        float randomNumbery = Rn.nextFloat((float) -2.2, (float) 2.2);
+        if (paddle.getIsCpu()) {
+            randomNumberx = Rn.nextFloat((float) 0.1, (float) 0.8);
+            do {
+                randomNumbery = Rn.nextFloat((float) -1.3, (float) 1.3);
+            } while (randomNumbery == 0);
 
+        } else {
+            randomNumberx = Rn.nextFloat((float) -0.8, (float) -0.1);
+            do{
+                randomNumbery = Rn.nextFloat((float) -1.3, (float) 1.3);
+            } while (randomNumbery == 0);
+        }
         this.x = randomNumberx;
         this.y = randomNumbery;
     }

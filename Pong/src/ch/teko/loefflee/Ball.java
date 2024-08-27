@@ -7,7 +7,8 @@ import java.util.Random;
  * Ball-Klasse, die den Ball im Pong-Spiel repräsentiert.
  */
 public class Ball {
-    private int x, y, dx, dy;
+    private int x, y;
+    private float dx, dy;
     private int speed;
     private int size;
     private boolean doubleBallSpeedIsOn;
@@ -104,7 +105,7 @@ public class Ball {
      * @param x positive Zahlen bewegen den Ball nach rechts, negative nach links
      * @param y positive Zahlen bewegen den Ball nach unten, negative nach oben
      */
-    public void manipulatexy(int x, int y) {
+    public void manipulatexy(float x, float y) {
         this.x += x;
         this.y += y;
     }
@@ -118,7 +119,7 @@ public class Ball {
     public void applyWind(float windX, float windY) {
         dx += windX;
         dy += windY;
-        System.out.println("WIND IN BALL");
+        System.out.println("dy = " + dy);
         manipulatexy(dx, dy);
     }
 

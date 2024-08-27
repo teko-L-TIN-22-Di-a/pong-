@@ -34,6 +34,10 @@ public class Paddle {
         this.isCpu = isCpu;
     }
 
+    public boolean getIsCpu(){
+        return isCpu;
+    }
+
     /**
      * Bewegt das Paddle nach oben.
      */

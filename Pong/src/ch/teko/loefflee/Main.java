@@ -159,7 +159,7 @@ public class Main extends JPanel implements KeyListener {
                 System.out.println("PADDLE");
                 break; */
             case 0:
-                wind.randomWind();
+                wind.randomWind(paddle);
                 ball.applyWind(wind.getX(), wind.getY());
                 ball.resetBallSpeed();
                 System.out.println("WIND");

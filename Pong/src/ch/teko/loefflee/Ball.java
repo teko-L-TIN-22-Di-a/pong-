@@ -3,24 +3,33 @@ package ch.teko.loefflee;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Repräsentiert den Ball im Pong-Spiel.
+ * Der Ball bewegt sich über das Spielfeld und wird von Wind beeinflusst.
+ */
 public class Ball {
     private float x, y;
     private float dx, dy;
-    private int speed;
+    private float speed;
     private int size;
     private boolean doubleBallSpeedIsOn;
     private Color color;
     private long lastResetTime;
-    private static final float FRICTION = 0.99f;
-    private static final float MIN_HORIZONTAL_SPEED = 0.5f;
-    private static final float WIND_FACTOR = 0.3f;
-    private static final float WIND_SPEED_BOOST = 1.2f;
+    private static final float FRICTION = 0.999f;
+    private static final float MIN_SPEED = 5f;
+    private static final float MAX_SPEED = 15f;
+    private static final float WIND_FACTOR = 0.1f;
 
-
+    /**
+     * Erstellt einen neuen Ball mit einer zufälligen Startrichtung.
+     *
+     * @param windowWidth  Die Breite des Spielfensters
+     * @param windowHeight Die Höhe des Spielfensters
+     */
     public Ball(int windowWidth, int windowHeight) {
-        this.x = windowWidth / 2 - 5;
-        this.y = windowHeight / 2 - 5;
-        this.speed = 2;
+        this.x = windowWidth / 2f - 5;
+        this.y = windowHeight / 2f - 5;
+        this.speed = 7f;
         this.size = 13;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
@@ -28,58 +37,67 @@ public class Ball {
         setRandomDirection();
     }
 
+    /**
+     * Setzt eine zufällige Bewegungsrichtung für den Ball.
+     */
     private void setRandomDirection() {
         Random random = new Random();
-        dx = random.nextFloat() * 2 - 1; // Random float between -1 and 1
-        dy = random.nextFloat() * 2 - 1; // Random float between -1 and 1
-        normalizeSpeed();
+        float angle = (float) (random.nextFloat() * Math.PI / 2 + Math.PI / 4);
+        if (random.nextBoolean()) angle += Math.PI;
+        dx = (float) Math.cos(angle) * speed;
+        dy = (float) Math.sin(angle) * speed;
     }
 
-    private void normalizeSpeed() {
-        float length = (float) Math.sqrt(dx * dx + dy * dy);
-        if (length != 0) {
-            dx = dx / length * speed;
-            dy = dy / length * speed;
-        }
-    }
-
-    public void move(Wind wind) {
+    /**
+     * Bewegt den Ball und wendet Windeinfluss an.
+     *
+     * @param wind Das Wind-Objekt, das den aktuellen Windstatus repräsentiert
+     * @param windowWidth Die Breite des Spielfensters
+     * @param windowHeight Die Höhe des Spielfensters
+     */
+    public void move(Wind wind, int windowWidth, int windowHeight) {
         long currentTime = System.currentTimeMillis();
         long elapsedTime = currentTime - lastResetTime;
-        float currentSpeed = elapsedTime < 1000 ? speed / 2f : speed;
+        float speedMultiplier = elapsedTime < 1000 ? 0.5f : 1f;
 
-        // Apply wind as acceleration
+        // Wende Windeinfluss an
+        dx += wind.getX() * WIND_FACTOR;
+        dy += wind.getY() * WIND_FACTOR;
 
-        float windX = wind.getX();
-        float windY = wind.getY();
-        dx += windX * WIND_FACTOR;
-        dy += windY * WIND_FACTOR;
-
-        // Apply wind speed boost
-        float windStrength = (float) Math.sqrt(windX * windX + windY * windY);
-        float speedBoost = 1 + (windStrength * WIND_SPEED_BOOST);
-
-        // Apply friction
+        // Wende Reibung an
         dx *= FRICTION;
         dy *= FRICTION;
 
-        // Ensure minimum horizontal speed
-        if (Math.abs(dx) < MIN_HORIZONTAL_SPEED) {
-            dx = dx < 0 ? -MIN_HORIZONTAL_SPEED : MIN_HORIZONTAL_SPEED;
-        }
-
-        // Limit maximum speed
-        float maxSpeed = (doubleBallSpeedIsOn ? currentSpeed * 2 : currentSpeed) * speedBoost;
+        // Stelle Mindestgeschwindigkeit sicher
         float currentVelocity = (float) Math.sqrt(dx * dx + dy * dy);
-        if (currentVelocity > maxSpeed) {
-            dx = (dx / currentVelocity) * maxSpeed;
-            dy = (dy / currentVelocity) * maxSpeed;
+        if (currentVelocity < MIN_SPEED) {
+            float scaleFactor = MIN_SPEED / currentVelocity;
+            dx *= scaleFactor;
+            dy *= scaleFactor;
         }
 
-        x += dx;
-        y += dy;
+        // Begrenze Maximalgeschwindigkeit
+        float maxSpeed = doubleBallSpeedIsOn ? MAX_SPEED * 2 : MAX_SPEED;
+        if (currentVelocity > maxSpeed) {
+            float scaleFactor = maxSpeed / currentVelocity;
+            dx *= scaleFactor;
+            dy *= scaleFactor;
+        }
 
-        // Update color based on time since reset
+        x += dx * speedMultiplier;
+        y += dy * speedMultiplier;
+
+        // Prüfe auf Kollisionen mit den Spielfeldrändern
+        if (x < 0 || x > windowWidth - size) {
+            dx = -dx;
+            x = Math.max(0, Math.min(x, windowWidth - size));
+        }
+        if (y < 0 || y > windowHeight - size) {
+            dy = -dy;
+            y = Math.max(0, Math.min(y, windowHeight - size));
+        }
+
+        // Aktualisiere Farbe basierend auf der Zeit seit dem letzten Reset
         if (elapsedTime < 1000) {
             this.color = Color.GRAY;
         } else if (!this.doubleBallSpeedIsOn) {
@@ -87,17 +105,13 @@ public class Ball {
         }
     }
 
-
     public void changeDirectionX() {
         dx = -dx;
-        normalizeSpeed(); // Ensure consistent speed after bouncing
     }
 
     public void changeDirectionY() {
         dy = -dy;
-        normalizeSpeed(); // Ensure consistent speed after bouncing
     }
-
 
     public void draw(Graphics g) {
         g.setColor(color);
@@ -125,16 +139,18 @@ public class Ball {
     }
 
     public void doubleBallSpeed() {
-        this.speed = this.speed * 2;
+        this.speed *= 2;
         this.doubleBallSpeedIsOn = true;
         this.color = Color.RED;
     }
 
     public void resetBallSpeed() {
-        this.speed = 3;
+        this.speed = 8;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
     }
 
-    // Removed manipulatexy and applyWind methods as they're no longer needed
+    public float getDx() {
+        return dx;
+    }
 }

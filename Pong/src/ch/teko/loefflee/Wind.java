@@ -2,39 +2,55 @@ package ch.teko.loefflee;
 
 import java.util.Random;
 
+/**
+ * Repräsentiert den Wind im Spiel, der den Ball beeinflusst.
+ * Der Wind ändert sich allmählich und hat eine variierende Stärke und Richtung.
+ */
 public class Wind {
     private float x;
     private float y;
     private Random random;
-    private static final float MAX_WIND_STRENGTH = 5f; // Increased from 0.05f to 0.1f
+    private static final float MAX_WIND_STRENGTH = 0.5f;
     private static final float WIND_CHANGE_RATE = 0.01f;
 
+    /**
+     * Erstellt ein neues Wind-Objekt mit zufälliger Anfangsstärke und -richtung.
+     */
     public Wind() {
         random = new Random();
-        x = 0;
-        y = 0;
+        x = (random.nextFloat() - 0.5f) * MAX_WIND_STRENGTH;
+        y = (random.nextFloat() - 0.5f) * MAX_WIND_STRENGTH;
     }
 
+    /**
+     * Aktualisiert die Windstärke und -richtung.
+     * Der Wind ändert sich allmählich und bleibt innerhalb festgelegter Grenzen.
+     */
     public void update() {
-        // Gradually change wind
+        // Ändere Wind allmählich
         x += (random.nextFloat() - 0.5f) * WIND_CHANGE_RATE;
-        y += (random.nextFloat() - 0.518f) * WIND_CHANGE_RATE;
+        y += (random.nextFloat() - 0.5f) * WIND_CHANGE_RATE;
 
-        // Limit wind strength
+        // Begrenze Windstärke
         x = Math.max(-MAX_WIND_STRENGTH, Math.min(MAX_WIND_STRENGTH, x));
         y = Math.max(-MAX_WIND_STRENGTH, Math.min(MAX_WIND_STRENGTH, y));
     }
 
+    /**
+     * Gibt die horizontale Komponente der Windstärke zurück.
+     *
+     * @return Die horizontale Windstärke
+     */
     public float getX() {
         return x;
     }
 
+    /**
+     * Gibt die vertikale Komponente der Windstärke zurück.
+     *
+     * @return Die vertikale Windstärke
+     */
     public float getY() {
         return y;
     }
 }
-
-
-// momentan drückt der wind den ball einfach nach unten. der ball springt also einfach nach oben und sinkt wieder ab, während er sich auf eine seite bewegt. ausserdem soll der ball sich schneller bewegen
-// der wind soll den ball weniger direkt nach oben oder unten pressen. mehr auch rechts & links
-// wind change rate & max wind strength nur alle 8 sekunden für 3 sekunden

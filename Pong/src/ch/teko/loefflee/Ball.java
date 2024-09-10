@@ -3,10 +3,6 @@ package ch.teko.loefflee;
 import java.awt.*;
 import java.util.Random;
 
-/**
- * Repräsentiert den Ball im Pong-Spiel.
- * Der Ball bewegt sich über das Spielfeld und wird von Wind beeinflusst.
- */
 public class Ball {
     private float x, y;
     private float dx, dy;
@@ -15,21 +11,15 @@ public class Ball {
     private boolean doubleBallSpeedIsOn;
     private Color color;
     private long lastResetTime;
-    private static final float FRICTION = 0.999f;
-    private static final float MIN_SPEED = 5f;
-    private static final float MAX_SPEED = 15f;
-    private static final float WIND_FACTOR = 0.1f;
+    private static final float FRICTION = 0.995f; // Increased from 0.99f to reduce speed loss
+    private static final float MIN_SPEED = 3f; // Increased from 2f
+    private static final float MAX_SPEED = 18f; // Increased from 15f
+    private static final float WIND_FACTOR = 0.05f;
 
-    /**
-     * Erstellt einen neuen Ball mit einer zufälligen Startrichtung.
-     *
-     * @param windowWidth  Die Breite des Spielfensters
-     * @param windowHeight Die Höhe des Spielfensters
-     */
     public Ball(int windowWidth, int windowHeight) {
-        this.x = windowWidth / 2f - 5;
-        this.y = windowHeight / 2f - 5;
-        this.speed = 7f;
+        this.x = windowWidth / 2 - 5;
+        this.y = windowHeight / 2 - 5;
+        this.speed = 9f;  // Increased from 7f for faster initial speed
         this.size = 13;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
@@ -37,38 +27,27 @@ public class Ball {
         setRandomDirection();
     }
 
-    /**
-     * Setzt eine zufällige Bewegungsrichtung für den Ball.
-     */
     private void setRandomDirection() {
         Random random = new Random();
-        float angle = (float) (random.nextFloat() * Math.PI / 2 + Math.PI / 4);
-        if (random.nextBoolean()) angle += Math.PI;
+        float angle = (float) (random.nextFloat() * 2 * Math.PI);
         dx = (float) Math.cos(angle) * speed;
         dy = (float) Math.sin(angle) * speed;
     }
 
-    /**
-     * Bewegt den Ball und wendet Windeinfluss an.
-     *
-     * @param wind Das Wind-Objekt, das den aktuellen Windstatus repräsentiert
-     * @param windowWidth Die Breite des Spielfensters
-     * @param windowHeight Die Höhe des Spielfensters
-     */
-    public void move(Wind wind, int windowWidth, int windowHeight) {
+    public void move(Wind wind) {
         long currentTime = System.currentTimeMillis();
         long elapsedTime = currentTime - lastResetTime;
-        float speedMultiplier = elapsedTime < 1000 ? 0.5f : 1f;
+        float currentSpeed = elapsedTime < 1000 ? speed / 1.5f : speed;
 
-        // Wende Windeinfluss an
+        // Apply wind influence
         dx += wind.getX() * WIND_FACTOR;
         dy += wind.getY() * WIND_FACTOR;
 
-        // Wende Reibung an
+        // Apply friction
         dx *= FRICTION;
         dy *= FRICTION;
 
-        // Stelle Mindestgeschwindigkeit sicher
+        // Ensure minimum speed
         float currentVelocity = (float) Math.sqrt(dx * dx + dy * dy);
         if (currentVelocity < MIN_SPEED) {
             float scaleFactor = MIN_SPEED / currentVelocity;
@@ -76,7 +55,7 @@ public class Ball {
             dy *= scaleFactor;
         }
 
-        // Begrenze Maximalgeschwindigkeit
+        // Limit maximum speed
         float maxSpeed = doubleBallSpeedIsOn ? MAX_SPEED * 2 : MAX_SPEED;
         if (currentVelocity > maxSpeed) {
             float scaleFactor = maxSpeed / currentVelocity;
@@ -84,20 +63,10 @@ public class Ball {
             dy *= scaleFactor;
         }
 
-        x += dx * speedMultiplier;
-        y += dy * speedMultiplier;
+        x += dx;
+        y += dy;
 
-        // Prüfe auf Kollisionen mit den Spielfeldrändern
-        if (x < 0 || x > windowWidth - size) {
-            dx = -dx;
-            x = Math.max(0, Math.min(x, windowWidth - size));
-        }
-        if (y < 0 || y > windowHeight - size) {
-            dy = -dy;
-            y = Math.max(0, Math.min(y, windowHeight - size));
-        }
-
-        // Aktualisiere Farbe basierend auf der Zeit seit dem letzten Reset
+        // Update color based on time since reset
         if (elapsedTime < 1000) {
             this.color = Color.GRAY;
         } else if (!this.doubleBallSpeedIsOn) {
@@ -148,9 +117,5 @@ public class Ball {
         this.speed = 8;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
-    }
-
-    public float getDx() {
-        return dx;
     }
 }

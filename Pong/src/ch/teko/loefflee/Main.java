@@ -87,7 +87,7 @@ public class Main extends JPanel implements KeyListener {
      */
     public void updateGame() {
         wind.update();
-        ball.move(wind, getWidth(), getHeight());
+        ball.move(wind);
 
         int ballX = ball.getX();
         int ballY = ball.getY();
@@ -99,21 +99,15 @@ public class Main extends JPanel implements KeyListener {
         }
 
         // Check and bounce bei Kontakt mit Paddles
-        if (ballX <= playerPaddle.getX() + playerPaddle.getWidth() &&
-                ballX > playerPaddle.getX() &&
-                ballY + ballSize >= playerPaddle.getY() &&
-                ballY <= playerPaddle.getY() + playerPaddle.getHeight()) {
-            if (ball.getDx() < 0) {  // Only change direction if moving towards the paddle
+        if (ballX <= playerPaddle.getX() + playerPaddle.getWidth() && ballY >= playerPaddle.getY() && ballY <= playerPaddle.getY() + playerPaddle.getHeight()) {
+            if (!effectApplied) {
                 randyRandomEffectUse(playerPaddle);
                 ball.changeDirectionX();
             }
         }
 
-        if (ballX + ballSize >= cpuPaddle.getX() &&
-                ballX < cpuPaddle.getX() + cpuPaddle.getWidth() &&
-                ballY + ballSize >= cpuPaddle.getY() &&
-                ballY <= cpuPaddle.getY() + cpuPaddle.getHeight()) {
-            if (ball.getDx() > 0) {  // Only change direction if moving towards the paddle
+        if (ballX >= cpuPaddle.getX() - ballSize && ballY >= cpuPaddle.getY() && ballY <= cpuPaddle.getY() + cpuPaddle.getHeight()) {
+            if (!effectApplied) {
                 randyRandomEffectUse(cpuPaddle);
                 ball.changeDirectionX();
             }
@@ -211,7 +205,7 @@ public class Main extends JPanel implements KeyListener {
         while (true) {
             game.updateGame();
             try {
-                Thread.sleep(16);
+                Thread.sleep(12);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

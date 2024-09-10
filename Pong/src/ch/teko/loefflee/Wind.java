@@ -2,54 +2,39 @@ package ch.teko.loefflee;
 
 import java.util.Random;
 
-/**
- * Wind-Klasse, die zufällige Windstärken für das Pong-Spiel generiert.
- */
 public class Wind {
     private float x;
     private float y;
-    private float randomNumberx;
-    private float randomNumbery;
+    private Random random;
+    private static final float MAX_WIND_STRENGTH = 5f; // Increased from 0.05f to 0.1f
+    private static final float WIND_CHANGE_RATE = 0.01f;
 
-    /**
-     * Generiert zufällige Windstärken für die X- und Y-Achse.
-     * Die Windstärke variiert zwischen -3 und 3.
-     * @param paddle
-     */
-    public void randomWind(Paddle paddle) {
-        Random Rn = new Random();
-
-        if (paddle.getIsCpu()) {
-            randomNumberx = Rn.nextFloat((float) 0.1, (float) 0.8);
-            do {
-                randomNumbery = Rn.nextFloat((float) -1.3, (float) 1.3);
-            } while (randomNumbery == 0);
-
-        } else {
-            randomNumberx = Rn.nextFloat((float) -0.8, (float) -0.1);
-            do{
-                randomNumbery = Rn.nextFloat((float) -1.3, (float) 1.3);
-            } while (randomNumbery == 0);
-        }
-        this.x = randomNumberx;
-        this.y = randomNumbery;
+    public Wind() {
+        random = new Random();
+        x = 0;
+        y = 0;
     }
 
-    /**
-     * Gibt die Windstärke auf der X-Achse zurück.
-     *
-     * @return die Windstärke auf der X-Achse
-     */
+    public void update() {
+        // Gradually change wind
+        x += (random.nextFloat() - 0.5f) * WIND_CHANGE_RATE;
+        y += (random.nextFloat() - 0.518f) * WIND_CHANGE_RATE;
+
+        // Limit wind strength
+        x = Math.max(-MAX_WIND_STRENGTH, Math.min(MAX_WIND_STRENGTH, x));
+        y = Math.max(-MAX_WIND_STRENGTH, Math.min(MAX_WIND_STRENGTH, y));
+    }
+
     public float getX() {
         return x;
     }
 
-    /**
-     * Gibt die Windstärke auf der Y-Achse zurück.
-     *
-     * @return die Windstärke auf der Y-Achse
-     */
     public float getY() {
         return y;
     }
 }
+
+
+// momentan drückt der wind den ball einfach nach unten. der ball springt also einfach nach oben und sinkt wieder ab, während er sich auf eine seite bewegt. ausserdem soll der ball sich schneller bewegen
+// der wind soll den ball weniger direkt nach oben oder unten pressen. mehr auch rechts & links
+// wind change rate & max wind strength nur alle 8 sekunden für 3 sekunden

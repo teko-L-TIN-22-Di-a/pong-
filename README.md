@@ -4,7 +4,7 @@
 Pong+ ist eine erweiterte Version des klassischen Pong-Spiels. Der Schwerpunkt dieses Spiels liegt auf der Integration des [Wind](Wind.md)-Elements, das dem traditionellen Pong eine innovative und unterhaltsame Dimension hinzufügt. Diese Dokumentation soll einen Überblick über das Projekt Pong+ geben, einschliesslich seiner Funktionalitäten, der Implementierung und der Spielmechanik.
 
 ## Spielbeschreibung:
-Pong+ ist ein Arcade-Spiel, das auf dem klassischen Pong basiert, bei dem ein Spieler gegen den CPU antritt. Der Zweck des Spiels ist es, den [Ball](Ball.md) mit einem sich bewegenden «Balken» zurückzuschlagen.
+Pong+ ist ein Arcade-Spiel, das auf dem klassischen Pong basiert, bei dem ein Spieler gegen den CPU antritt. Der Zweck des Spiels ist es, den [Ball](Ball.md) mit einem sich bewegenden «Balken» zurückzuschlagen. Der Spieler bewegt seinen Balken mit "W" und "S".
 
 ## Funktionalitäten:
 Alles wird vom [Main](Main.md) aus gesteuert.

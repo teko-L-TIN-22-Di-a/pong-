@@ -10,8 +10,8 @@ public class Wind {
     private float x;
     private float y;
     private Random random;
-    private static final float MAX_WIND_STRENGTH = 0.5f;
-    private static final float WIND_CHANGE_RATE = 0.01f;
+    private static final float MAX_WIND_STRENGTH = 0.4f;
+    private static final float WIND_CHANGE_RATE = 0.03f;
 
     /**
      * Erstellt ein neues Wind-Objekt mit zufälliger Anfangsstärke und -richtung.

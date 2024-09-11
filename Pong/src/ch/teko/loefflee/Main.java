@@ -24,6 +24,7 @@ public class Main extends JPanel implements KeyListener {
     private Random random;
     private Wind wind;
     private boolean effectApplied;
+    private Paddle lastHitPaddle;
 
     /**
      * Konstruktor für die Hauptklasse.
@@ -48,6 +49,7 @@ public class Main extends JPanel implements KeyListener {
 
         effectApplied = false;
         wind = new Wind();
+        lastHitPaddle = null;
         randyRandomEffect();
     }
 
@@ -84,7 +86,8 @@ public class Main extends JPanel implements KeyListener {
      * erhöht die Punktzahl bei einem Tor und bewegt das CPU-Paddle entsprechend der Y-Achse des Balls.
      */
     public void updateGame() {
-        ball.move();
+        wind.update();
+        ball.move(wind);
 
         int ballX = ball.getX();
         int ballY = ball.getY();
@@ -140,12 +143,11 @@ public class Main extends JPanel implements KeyListener {
      * Führt zufällige Effekte aus.
      * 25% Chance für verdoppelte Ballgeschwindigkeit,
      * 50% Chance für halbierte Paddelgröße,
-     * 25% Chance für Wind.
      *
      * @param paddle das Paddle, auf das der Effekt angewendet wird
      */
     public void randyRandomEffectUse(Paddle paddle) {
-        int randomNumber = random.nextInt(2);
+        int randomNumber = random.nextInt(3);
 
         switch (randomNumber) {
             case 0:
@@ -155,12 +157,6 @@ public class Main extends JPanel implements KeyListener {
             case 1, 2:
                 paddle.halvedPaddleSize();
                 System.out.println("PADDLE");
-                break;
-            case 3:
-                wind.randomWind();
-                ball.applyWind(wind.getX(), wind.getY());
-                ball.resetBallSpeed();
-                System.out.println("WIND");
                 break;
         }
     }

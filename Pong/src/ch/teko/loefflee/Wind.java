@@ -3,41 +3,54 @@ package ch.teko.loefflee;
 import java.util.Random;
 
 /**
- * Wind-Klasse, die zufällige Windstärken für das Pong-Spiel generiert.
+ * Repräsentiert den Wind im Spiel, der den Ball beeinflusst.
+ * Der Wind ändert sich allmählich und hat eine variierende Stärke und Richtung.
  */
 public class Wind {
-    private int x;
-    private int y;
+    private float x;
+    private float y;
+    private Random random;
+    private static final float MAX_WIND_STRENGTH = 0.4f;
+    private static final float WIND_CHANGE_RATE = 0.03f;
 
     /**
-     * Generiert zufällige Windstärken für die X- und Y-Achse.
-     * Die Windstärke variiert zwischen -3 und 3.
+     * Erstellt ein neues Wind-Objekt mit zufälliger Anfangsstärke und -richtung.
      */
-    public void randomWind() {
-        Random Rn = new Random();
-
-        int randomNumberx = Rn.nextInt(-3, 3);
-        int randomNumbery = Rn.nextInt(-3, 3);
-
-        this.x = randomNumberx;
-        this.y = randomNumbery;
+    public Wind() {
+        random = new Random();
+        x = (random.nextFloat() - 0.5f) * MAX_WIND_STRENGTH;
+        y = (random.nextFloat() - 0.5f) * MAX_WIND_STRENGTH;
     }
 
     /**
-     * Gibt die Windstärke auf der X-Achse zurück.
-     *
-     * @return die Windstärke auf der X-Achse
+     * Aktualisiert die Windstärke und -richtung.
+     * Der Wind ändert sich allmählich und bleibt innerhalb festgelegter Grenzen.
      */
-    public int getX() {
+    public void update() {
+        // Ändere Wind allmählich
+        x += (random.nextFloat() - 0.5f) * WIND_CHANGE_RATE;
+        y += (random.nextFloat() - 0.5f) * WIND_CHANGE_RATE;
+
+        // Begrenze Windstärke
+        x = Math.max(-MAX_WIND_STRENGTH, Math.min(MAX_WIND_STRENGTH, x));
+        y = Math.max(-MAX_WIND_STRENGTH, Math.min(MAX_WIND_STRENGTH, y));
+    }
+
+    /**
+     * Gibt die horizontale Komponente der Windstärke zurück.
+     *
+     * @return Die horizontale Windstärke
+     */
+    public float getX() {
         return x;
     }
 
     /**
-     * Gibt die Windstärke auf der Y-Achse zurück.
+     * Gibt die vertikale Komponente der Windstärke zurück.
      *
-     * @return die Windstärke auf der Y-Achse
+     * @return Die vertikale Windstärke
      */
-    public int getY() {
+    public float getY() {
         return y;
     }
 }

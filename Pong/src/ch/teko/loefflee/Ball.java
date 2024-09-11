@@ -4,27 +4,33 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * Ball-Klasse, die den Ball im Pong-Spiel repräsentiert.
+ * Repräsentiert den Ball im Pong Spiel
+ * Der Ball bewegt sich durch das Spielfelt, prallt an paddles und Wänden ab und wird vom Wind bewegt.
  */
 public class Ball {
-    private int x, y, dx, dy;
-    private int speed;
+    private float x, y;
+    private float dx, dy;
+    private float speed;
     private int size;
     private boolean doubleBallSpeedIsOn;
     private Color color;
     private long lastResetTime;
+    private static final float friction = 0.995f;
+    private static final float MIN_SPEED = 3f;
+    private static final float maxSpeed = 18f;
+    private static final float windfactor = 0.05f;
+    private static final long spawnSpeedReductionDuration = 1000; // 1 second in milliseconds
 
     /**
-     * Konstruktor für den Ball.
-     * Der Ball spawnt in der Mitte des Spielfelds und wird mit Farbe, Größe und Geschwindigkeit initialisiert.
+     * Konstruktor des Balls
      *
-     * @param windowWidth  die Breite des Fensters
-     * @param windowHeight die Höhe des Fensters
+     * @param windowWidth  Die Weite des Spielfensters
+     * @param windowHeight Die Höhe des Spielfensters
      */
     public Ball(int windowWidth, int windowHeight) {
         this.x = windowWidth / 2 - 5;
         this.y = windowHeight / 2 - 5;
-        this.speed = 3;
+        this.speed = 9f;
         this.size = 13;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
@@ -33,100 +39,111 @@ public class Ball {
     }
 
     /**
-     * Setzt eine zufällige Richtung für den Ball nach dem Spawn.
+     * Setzt eine zufällige Richtung des Balls
      */
     private void setRandomDirection() {
         Random random = new Random();
-        dx = random.nextBoolean() ? 1 : -1;
-        dy = random.nextBoolean() ? 1 : -1;
+        float angle = (float) (random.nextFloat() * 2 * Math.PI);
+        dx = (float) Math.cos(angle) * speed;
+        dy = (float) Math.sin(angle) * speed;
     }
 
     /**
-     * Bewegt den Ball.
-     * In der ersten Sekunde nach dem Spawn bewegt sich der Ball mit halber Geschwindigkeit und ist grau gefärbt.
-     * Danach bewegt er sich mit normaler Geschwindigkeit und ist weiß.
+     * Bewegt den ball, führt Windstärke, die Reibung aus und limitiert das Tempo des Balls.
+     * Die Geschwindigkeit des Balls wird halbiert für die erste Sekunde nach dem "spawn"
+     *
+     * @param wind verändert die Bewegung des Balls
      */
-    public void move() {
+    public void move(Wind wind) {
         long currentTime = System.currentTimeMillis();
         long elapsedTime = currentTime - lastResetTime;
-        if (elapsedTime < 1000) {
-            x += dx * (speed / 2);
-            y += dy * (speed / 2);
+        float speedMultiplier = elapsedTime < spawnSpeedReductionDuration ? 0.5f : 1f;
+
+        // Apply wind influence
+        dx += wind.getX() * windfactor;
+        dy += wind.getY() * windfactor;
+
+        // Apply friction
+        dx *= friction;
+        dy *= friction;
+
+        // Stellt minimum speed sicher
+        float currentVelocity = (float) Math.sqrt(dx * dx + dy * dy);
+        if (currentVelocity < MIN_SPEED * speedMultiplier) {
+            float scaleFactor = (MIN_SPEED * speedMultiplier) / currentVelocity;
+            dx *= scaleFactor;
+            dy *= scaleFactor;
+        }
+
+        // Stellt minimum speed sicher
+        float maxSpeed = doubleBallSpeedIsOn ? Ball.maxSpeed * 2 : Ball.maxSpeed;
+        maxSpeed *= speedMultiplier;
+        if (currentVelocity > maxSpeed) {
+            float scaleFactor = maxSpeed / currentVelocity;
+            dx *= scaleFactor;
+            dy *= scaleFactor;
+        }
+
+        x += dx * speedMultiplier;
+        y += dy * speedMultiplier;
+
+        // Update color based on time since reset
+        if (elapsedTime < spawnSpeedReductionDuration) {
             this.color = Color.GRAY;
-        } else {
-            if (!this.doubleBallSpeedIsOn) {
-                this.color = Color.WHITE;
-            }
-            x += dx * speed;
-            y += dy * speed;
+        } else if (!this.doubleBallSpeedIsOn) {
+            this.color = Color.WHITE;
         }
     }
 
     /**
-     * Zeichnet den Ball als Kreis.
-     *
-     * @param g das Grafikobjekt zum Zeichnen
-     */
-    public void draw(Graphics g) {
-        g.setColor(color);
-        g.fillOval(x, y, size, size);
-    }
-
-    /**
-     * Ändert die Richtung des Balls auf der X-Achse (Einfallswinkel = Ausfallswinkel).
+     * Ändert die horizontale Richtung des Balls.
      */
     public void changeDirectionX() {
         dx = -dx;
     }
 
     /**
-     * Ändert die Richtung des Balls auf der Y-Achse (Einfallswinkel = Ausfallswinkel).
+     * Ändert die vertikale Richtung des Balls.
      */
     public void changeDirectionY() {
         dy = -dy;
     }
 
+    /**
+     * Zeichnet den Ball
+     *
+     * @param g Kontext der Grafik
+     */
+    public void draw(Graphics g) {
+        g.setColor(color);
+        g.fillOval((int)x, (int)y, size, size);
+    }
+
+    /**
+     * Gibt die x-Koordinate des balls.
+     */
     public int getX() {
-        return x;
+        return (int)x;
     }
 
+    /**
+     * Gibt die y-Koordinate des balls.
+     */
     public int getY() {
-        return y;
+        return (int)y;
     }
 
+    /**
+     * Gibt die Grösse des Balls.
+     */
     public int getSize() {
         return size;
     }
 
     /**
-     * Manipuliert die Position des Balls.
-     *
-     * @param x positive Zahlen bewegen den Ball nach rechts, negative nach links
-     * @param y positive Zahlen bewegen den Ball nach unten, negative nach oben
-     */
-    public void manipulatexy(int x, int y) {
-        this.x += x;
-        this.y += y;
-    }
-
-    /**
-     * Wendet Windkraft auf den Ball an.
-     *
-     * @param windX Windstärke auf der X-Achse
-     * @param windY Windstärke auf der Y-Achse
-     */
-    public void applyWind(int windX, int windY) {
-        dx += windX;
-        dy += windY;
-        System.out.println("WIND IN BALL");
-        manipulatexy(dx, dy);
-    }
-
-    /**
-     * Setzt den Ball in die Mitte des Spielfelds zurück.
-     *
-     * @param windowWidth  die Breite des Fensters
-     * @param windowHeight die Höhe des Fensters
+     * Setzt die Ballgeschwindigkeit zurück und erstellt ihn neu in der Mitte des Spielfelds
+     * @param windowWidth  Die Weite des Spielfensters
+     * @param windowHeight Die Höhe des Spielfensters
      */
     public void reset(int windowWidth, int windowHeight) {
         this.x = windowWidth / 2 - 5;
@@ -137,19 +154,19 @@ public class Ball {
     }
 
     /**
-     * Verdoppelt die Geschwindigkeit des Balls als Spezialeffekt.
+     * Verdoppelt die Geschwindigkeit des Balls und verändert die Farbe rot.
      */
     public void doubleBallSpeed() {
-        this.speed = this.speed * 2;
+        this.speed *= 2;
         this.doubleBallSpeedIsOn = true;
         this.color = Color.RED;
     }
 
     /**
-     * Setzt die Geschwindigkeit des Balls auf den ursprünglichen Wert zurück.
+     * Setzt die Änderungen des Balls zurück.
      */
     public void resetBallSpeed() {
-        this.speed = 3;
+        this.speed = 8;
         this.doubleBallSpeedIsOn = false;
         this.color = Color.WHITE;
     }

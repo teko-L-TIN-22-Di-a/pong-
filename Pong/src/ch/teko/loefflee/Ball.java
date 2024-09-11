@@ -16,9 +16,9 @@ public class Ball {
     private Color color;
     private long lastResetTime;
     private static final float friction = 0.995f;
-    private static final float MIN_SPEED = 3f;
+    private static final float minSpeed = 3f;
     private static final float maxSpeed = 18f;
-    private static final float windfactor = 0.05f;
+    private static final float windFactor = 0.05f;
     private static final long spawnSpeedReductionDuration = 1000; // 1 second in milliseconds
 
     /**
@@ -60,8 +60,8 @@ public class Ball {
         float speedMultiplier = elapsedTime < spawnSpeedReductionDuration ? 0.5f : 1f;
 
         // Apply wind influence
-        dx += wind.getX() * windfactor;
-        dy += wind.getY() * windfactor;
+        dx += wind.getX() * windFactor;
+        dy += wind.getY() * windFactor;
 
         // Apply friction
         dx *= friction;
@@ -69,8 +69,8 @@ public class Ball {
 
         // Stellt minimum speed sicher
         float currentVelocity = (float) Math.sqrt(dx * dx + dy * dy);
-        if (currentVelocity < MIN_SPEED * speedMultiplier) {
-            float scaleFactor = (MIN_SPEED * speedMultiplier) / currentVelocity;
+        if (currentVelocity < minSpeed * speedMultiplier) {
+            float scaleFactor = (minSpeed * speedMultiplier) / currentVelocity;
             dx *= scaleFactor;
             dy *= scaleFactor;
         }

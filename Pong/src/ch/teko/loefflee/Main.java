@@ -143,7 +143,6 @@ public class Main extends JPanel implements KeyListener {
      * Führt zufällige Effekte aus.
      * 25% Chance für verdoppelte Ballgeschwindigkeit,
      * 50% Chance für halbierte Paddelgröße,
-     * 25% Chance für Wind.
      *
      * @param paddle das Paddle, auf das der Effekt angewendet wird
      */
@@ -159,7 +158,6 @@ public class Main extends JPanel implements KeyListener {
                 paddle.halvedPaddleSize();
                 System.out.println("PADDLE");
                 break;
-
         }
     }
 

@@ -26,7 +26,7 @@
 - DoubleBallspeed (Erhöhte Geschwindigkeit und Färben des Balls)
 - HalvedPaddleSize (Verkleinerte Höhe und Färben des Paddles, welchen den Effekt auslöst)
 
-## Wind-Effekte einfügen
+## ~~Wind-Effekte einfügen~~
 - Wind-Klasse für zufällige Windstärken implementieren
 - Wind-Effekte auf den Ball anwenden (X- und Y-Achse)
 - Zufällige Auslösung von Wind-Effekten beim Ballkontakt mit Paddles

@@ -24,3 +24,6 @@ Die vier ersten Ideen für die Implementation des [Windes](Wind.md):
 [4. Idee](Pong/src/ch/teko/loefflee/docs/Wind4.jpg): Ein Objekt, welches nur in einem bestimmten Bereich wirkt.
 
 [Javadoc](Pong/src/ch/teko/loefflee/WindDoc.java)
+
+
+[Wie funktioniert der Wind jetzt genau?](WindErklärung.md)

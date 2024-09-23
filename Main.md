@@ -20,7 +20,7 @@ Die keyPressed(KeyEvent e)-Methode erlaubt es dem Spieler, das Paddle mit den Ta
 Das CPU-[Paddle](Paddle.md) bewegt sich automatisch entsprechend der Position des Balls, um diesen zurückzuschlagen.
 
 ## Zufällige Effekte:
-Zufällige Effekte wie verdoppelte [Ball](Ball.md)geschwindigkeit, halbierte [Paddle](Paddle.md)größe oder Wind werden bei bestimmten Bedingungen aktiviert und beeinflussen das Spielgeschehen.
+Zufällige Effekte wie verdoppelte [Ball](Ball.md)geschwindigkeit, halbierte [Paddle](Paddle.md)größe werden bei bestimmten Bedingungen aktiviert und beeinflussen das Spielgeschehen.
 
 ## Grafische Darstellung:
 Die paintComponent(Graphics g)-Methode zeichnet das Spielfeld, den Ball, die [Paddles](Paddle.md) und die Punktzähler auf das Fenster.
